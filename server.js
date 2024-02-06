@@ -8,7 +8,7 @@ dotenv.config();
 /**
  * Get port from environment and store in Express.
  */
-
+// Azure automatically sets the PORT environment variable
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
