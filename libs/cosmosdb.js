@@ -3,13 +3,13 @@ dotenv.config()
 
 import { CosmosClient } from '@azure/cosmos'
 
-const cosmosSecret = process.env.COSMOS_CONNECTION_STRING;
-const databaseName = process.env.COSMOS_DATABASE_NAME;
-const containerName = process.env.COSMOS_CONTAINER_NAME;
+const cosmosSecret = process.env.COSMOS_CONNECTION_STRING
+const databaseName = process.env.COSMOS_DATABASE_NAME
+const containerName = process.env.COSMOS_CONTAINER_NAME
 
 const cosmosClient = new CosmosClient(cosmosSecret);
-const { database } = await cosmosClient.databases.createIfNotExists({ id: databaseName });
-const { container } = await database.containers.createIfNotExists({ id: containerName });
+const { database } = await cosmosClient.databases.createIfNotExists({ id: databaseName })
+const { container } = await database.containers.createIfNotExists({ id: containerName })
 
 export const executeSqlFind = async (propertyName, propertyValue) => {
   const querySpec = {
@@ -20,13 +20,26 @@ export const executeSqlFind = async (propertyName, propertyValue) => {
         value: propertyValue
       }
     ]
-  };
+  }
 
   try {
-    const { resources: items } = await container.items.query(querySpec).fetchAll();
+    const { resources: items } = await container.items.query(querySpec).fetchAll()
     return items
   } catch (error) {
     console.error(error)
     return [{ error }]
   }
+}
+export const executeUpsert = async (data) => {
+  const result = await container.items.upsert(data)
+
+  if (result.statusCode === 201) {
+    console.log("Inserted data")
+  } else if (result.statusCode === 200) {
+    console.log("Updated data")
+  } else {
+    console.log(`unexpected statusCode ${result.statusCode}`)
+  }
+
+  return result
 }

@@ -1,0 +1,585 @@
+{
+  "result": {
+      "docType": "receipt.retailMeal",
+      "boundingRegions": [
+          {
+              "pageNumber": 1,
+              "polygon": [
+                  {
+                      "x": 0,
+                      "y": 0
+                  },
+                  {
+                      "x": 1448,
+                      "y": 0
+                  },
+                  {
+                      "x": 1448,
+                      "y": 2573
+                  },
+                  {
+                      "x": 0,
+                      "y": 2573
+                  }
+              ]
+          }
+      ],
+      "spans": [
+          {
+              "offset": 0,
+              "length": 269
+          }
+      ],
+      "fields": {
+          "Items": {
+              "kind": "array",
+              "values": [
+                  {
+                      "kind": "object",
+                      "properties": {
+                          "Description": {
+                              "kind": "string",
+                              "value": "懐かしの太麺ナポリタン",
+                              "boundingRegions": [
+                                  {
+                                      "pageNumber": 1,
+                                      "polygon": [
+                                          {
+                                              "x": 283,
+                                              "y": 1239
+                                          },
+                                          {
+                                              "x": 884,
+                                              "y": 1222
+                                          },
+                                          {
+                                              "x": 886,
+                                              "y": 1285
+                                          },
+                                          {
+                                              "x": 285,
+                                              "y": 1303
+                                          }
+                                      ]
+                                  }
+                              ],
+                              "content": "懐かしの太麺ナポリタン",
+                              "spans": [
+                                  {
+                                      "offset": 128,
+                                      "length": 11
+                                  }
+                              ],
+                              "confidence": 0.966
+                          },
+                          "TotalPrice": {
+                              "kind": "number",
+                              "value": 397,
+                              "boundingRegions": [
+                                  {
+                                      "pageNumber": 1,
+                                      "polygon": [
+                                          {
+                                              "x": 1019,
+                                              "y": 1229
+                                          },
+                                          {
+                                              "x": 1100,
+                                              "y": 1228
+                                          },
+                                          {
+                                              "x": 1100,
+                                              "y": 1280
+                                          },
+                                          {
+                                              "x": 1019,
+                                              "y": 1281
+                                          }
+                                      ]
+                                  }
+                              ],
+                              "content": "397",
+                              "spans": [
+                                  {
+                                      "offset": 140,
+                                      "length": 3
+                                  }
+                              ],
+                              "confidence": 0.987
+                          }
+                      },
+                      "boundingRegions": [
+                          {
+                              "pageNumber": 1,
+                              "polygon": [
+                                  {
+                                      "x": 283,
+                                      "y": 1239
+                                  },
+                                  {
+                                      "x": 1134,
+                                      "y": 1215
+                                  },
+                                  {
+                                      "x": 1135,
+                                      "y": 1279
+                                  },
+                                  {
+                                      "x": 285,
+                                      "y": 1303
+                                  }
+                              ]
+                          }
+                      ],
+                      "content": "懐かしの太麺ナポリタン\n397軽",
+                      "spans": [
+                          {
+                              "offset": 128,
+                              "length": 16
+                          }
+                      ],
+                      "confidence": 0.963
+                  },
+                  {
+                      "kind": "object",
+                      "properties": {
+                          "Description": {
+                              "kind": "string",
+                              "value": "ジューシー肉まん1コ",
+                              "boundingRegions": [
+                                  {
+                                      "pageNumber": 1,
+                                      "polygon": [
+                                          {
+                                              "x": 268,
+                                              "y": 1302
+                                          },
+                                          {
+                                              "x": 672,
+                                              "y": 1291
+                                          },
+                                          {
+                                              "x": 674,
+                                              "y": 1354
+                                          },
+                                          {
+                                              "x": 270,
+                                              "y": 1366
+                                          }
+                                      ]
+                                  }
+                              ],
+                              "content": "ジューシー肉まん1コ",
+                              "spans": [
+                                  {
+                                      "offset": 145,
+                                      "length": 10
+                                  }
+                              ],
+                              "confidence": 0.723
+                          },
+                          "TotalPrice": {
+                              "kind": "number",
+                              "value": 160,
+                              "boundingRegions": [
+                                  {
+                                      "pageNumber": 1,
+                                      "polygon": [
+                                          {
+                                              "x": 1026,
+                                              "y": 1289
+                                          },
+                                          {
+                                              "x": 1100,
+                                              "y": 1288
+                                          },
+                                          {
+                                              "x": 1100,
+                                              "y": 1340
+                                          },
+                                          {
+                                              "x": 1026,
+                                              "y": 1341
+                                          }
+                                      ]
+                                  }
+                              ],
+                              "content": "160",
+                              "spans": [
+                                  {
+                                      "offset": 156,
+                                      "length": 3
+                                  }
+                              ],
+                              "confidence": 0.987
+                          }
+                      },
+                      "boundingRegions": [
+                          {
+                              "pageNumber": 1,
+                              "polygon": [
+                                  {
+                                      "x": 268,
+                                      "y": 1302
+                                  },
+                                  {
+                                      "x": 1141,
+                                      "y": 1278
+                                  },
+                                  {
+                                      "x": 1143,
+                                      "y": 1341
+                                  },
+                                  {
+                                      "x": 270,
+                                      "y": 1365
+                                  }
+                              ]
+                          }
+                      ],
+                      "content": "ジューシー肉まん1コ\n160軽",
+                      "spans": [
+                          {
+                              "offset": 145,
+                              "length": 15
+                          }
+                      ],
+                      "confidence": 0.963
+                  }
+              ]
+          },
+          "MerchantAddress": {
+              "kind": "address",
+              "value": {
+                  "houseNumber": "3-11-1",
+                  "city": "江東区",
+                  "state": "東京都",
+                  "streetAddress": "有明3-11-1",
+                  "cityDistrict": "有明"
+              },
+              "boundingRegions": [
+                  {
+                      "pageNumber": 1,
+                      "polygon": [
+                          {
+                              "x": 241,
+                              "y": 931
+                          },
+                          {
+                              "x": 1020,
+                              "y": 909
+                          },
+                          {
+                              "x": 1022,
+                              "y": 972
+                          },
+                          {
+                              "x": 243,
+                              "y": 994
+                          }
+                      ]
+                  }
+              ],
+              "content": "東京都江東区有明3-11-1",
+              "spans": [
+                  {
+                      "offset": 39,
+                      "length": 14
+                  }
+              ],
+              "confidence": 0.976
+          },
+          "MerchantName": {
+              "kind": "string",
+              "value": "LAWSON",
+              "boundingRegions": [
+                  {
+                      "pageNumber": 1,
+                      "polygon": [
+                          {
+                              "x": 207,
+                              "y": 573
+                          },
+                          {
+                              "x": 1100,
+                              "y": 566
+                          },
+                          {
+                              "x": 1104,
+                              "y": 721
+                          },
+                          {
+                              "x": 217,
+                              "y": 743
+                          }
+                      ]
+                  }
+              ],
+              "content": "LAWSON",
+              "spans": [
+                  {
+                      "offset": 0,
+                      "length": 6
+                  }
+              ],
+              "confidence": 0.977
+          },
+          "MerchantPhoneNumber": {
+              "kind": "phoneNumber",
+              "value": "+81335281150",
+              "boundingRegions": [
+                  {
+                      "pageNumber": 1,
+                      "polygon": [
+                          {
+                              "x": 343,
+                              "y": 992
+                          },
+                          {
+                              "x": 736,
+                              "y": 984
+                          },
+                          {
+                              "x": 737,
+                              "y": 1044
+                          },
+                          {
+                              "x": 344,
+                              "y": 1059
+                          }
+                      ]
+                  }
+              ],
+              "content": ":03-3528-1150",
+              "spans": [
+                  {
+                      "offset": 56,
+                      "length": 13
+                  }
+              ],
+              "confidence": 0.979
+          },
+          "TaxDetails": {
+              "kind": "array",
+              "values": [
+                  {
+                      "kind": "object",
+                      "properties": {
+                          "Amount": {
+                              "kind": "currency",
+                              "value": {
+                                  "amount": 41,
+                                  "currencySymbol": "¥",
+                                  "currencyCode": "JPY"
+                              },
+                              "boundingRegions": [
+                                  {
+                                      "pageNumber": 1,
+                                      "polygon": [
+                                          {
+                                              "x": 1028,
+                                              "y": 1542
+                                          },
+                                          {
+                                              "x": 1139,
+                                              "y": 1542
+                                          },
+                                          {
+                                              "x": 1139,
+                                              "y": 1593
+                                          },
+                                          {
+                                              "x": 1028,
+                                              "y": 1594
+                                          }
+                                      ]
+                                  }
+                              ],
+                              "content": "¥41)",
+                              "spans": [
+                                  {
+                                      "offset": 201,
+                                      "length": 4
+                                  }
+                              ],
+                              "confidence": 0.972
+                          }
+                      },
+                      "boundingRegions": [
+                          {
+                              "pageNumber": 1,
+                              "polygon": [
+                                  {
+                                      "x": 447,
+                                      "y": 1482
+                                  },
+                                  {
+                                      "x": 1137,
+                                      "y": 1463
+                                  },
+                                  {
+                                      "x": 1140,
+                                      "y": 1595
+                                  },
+                                  {
+                                      "x": 451,
+                                      "y": 1614
+                                  }
+                              ]
+                          }
+                      ],
+                      "content": "(8%対象\n¥557)\n(内消費税額\n¥41)",
+                      "spans": [
+                          {
+                              "offset": 182,
+                              "length": 23
+                          }
+                      ],
+                      "confidence": 0.971
+                  }
+              ]
+          },
+          "Total": {
+              "kind": "number",
+              "value": 557,
+              "boundingRegions": [
+                  {
+                      "pageNumber": 1,
+                      "polygon": [
+                          {
+                              "x": 943,
+                              "y": 1348
+                          },
+                          {
+                              "x": 1159,
+                              "y": 1350
+                          },
+                          {
+                              "x": 1160,
+                              "y": 1405
+                          },
+                          {
+                              "x": 942,
+                              "y": 1406
+                          }
+                      ]
+                  }
+              ],
+              "content": "¥557",
+              "spans": [
+                  {
+                      "offset": 165,
+                      "length": 4
+                  }
+              ],
+              "confidence": 0.984
+          },
+          "TotalTax": {
+              "kind": "number",
+              "value": 41,
+              "boundingRegions": [
+                  {
+                      "pageNumber": 1,
+                      "polygon": [
+                          {
+                              "x": 1028,
+                              "y": 1542
+                          },
+                          {
+                              "x": 1139,
+                              "y": 1542
+                          },
+                          {
+                              "x": 1139,
+                              "y": 1593
+                          },
+                          {
+                              "x": 1028,
+                              "y": 1594
+                          }
+                      ]
+                  }
+              ],
+              "content": "¥41)",
+              "spans": [
+                  {
+                      "offset": 201,
+                      "length": 4
+                  }
+              ],
+              "confidence": 0.972
+          },
+          "TransactionDate": {
+              "kind": "date",
+              "value": "2024-02-20T00:00:00.000Z",
+              "boundingRegions": [
+                  {
+                      "pageNumber": 1,
+                      "polygon": [
+                          {
+                              "x": 352,
+                              "y": 1057
+                          },
+                          {
+                              "x": 754,
+                              "y": 1045
+                          },
+                          {
+                              "x": 756,
+                              "y": 1108
+                          },
+                          {
+                              "x": 354,
+                              "y": 1119
+                          }
+                      ]
+                  }
+              ],
+              "content": "2024年 2月20日",
+              "spans": [
+                  {
+                      "offset": 82,
+                      "length": 11
+                  }
+              ],
+              "confidence": 0.981
+          },
+          "TransactionTime": {
+              "kind": "time",
+              "value": "13:51:00",
+              "boundingRegions": [
+                  {
+                      "pageNumber": 1,
+                      "polygon": [
+                          {
+                              "x": 897,
+                              "y": 1044
+                          },
+                          {
+                              "x": 1034,
+                              "y": 1042
+                          },
+                          {
+                              "x": 1036,
+                              "y": 1096
+                          },
+                          {
+                              "x": 898,
+                              "y": 1102
+                          }
+                      ]
+                  }
+              ],
+              "content": "13:51",
+              "spans": [
+                  {
+                      "offset": 97,
+                      "length": 5
+                  }
+              ],
+              "confidence": 0.987
+          }
+      },
+      "confidence": 0.988
+  }
+}
