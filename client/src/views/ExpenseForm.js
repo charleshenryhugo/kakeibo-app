@@ -130,6 +130,8 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
     
     setEnteredDescription(description.join('\n'))
 
+    setExpenseType(ExpenseType.expense)
+
     setLoading(false)
   }
 
