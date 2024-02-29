@@ -22,7 +22,7 @@ const AppFooter = ({ appViewType, setAppViewType }) => {
 }
 
 AppFooter.propTypes = {
-  appViewType: AppViewType.isRequired,
+  appViewType: PropTypes.number.isRequired,
   setAppViewType: PropTypes.func.isRequired
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './Alert.css'
+import './Alert.scss'
 
 const Alert = ({ show, message }) => {
   return (

@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './AppHeader.scss'
-import { AppViewType, AppViewTypeToText } from '../constants/AppViewType'
+import { AppViewTypeToText } from '../constants/AppViewType'
 
 const AppHeader = ({ appViewType }) => {
   return (
@@ -13,7 +14,7 @@ const AppHeader = ({ appViewType }) => {
 }
 
 AppHeader.propTypes = {
-  appViewType: AppViewType.isRequired
+  appViewType: PropTypes.number.isRequired
 }
 
 export default AppHeader

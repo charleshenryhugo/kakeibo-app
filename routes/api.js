@@ -1,7 +1,7 @@
 import fs from 'fs'
 import multer from 'multer'
 import express from 'express'
-import { executeUpsert } from '../libs/cosmosdb.js'
+import { executeSqlFind, executeUpsert } from '../libs/cosmosdb.js'
 import { analyzeReceiptImage } from '../libs/documentIntelligence.js'
 
 const router = express.Router()
@@ -15,6 +15,14 @@ router.post('/addExpense', async (req, res) => {
   const result = await executeUpsert(expenseData)
 
   res.json({ statusCode: result.statusCode })
+})
+
+router.post('/getMonthlyExpenses', async (req, res) => {
+  const { year, month } = req.body
+  const result = await executeSqlFind({year, month})
+  console.log(result)
+
+  res.json({ result })
 })
 
 const upload = multer({ dest: 'receipt-uploads/' })

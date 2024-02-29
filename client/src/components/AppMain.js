@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import './AppMain.scss'
 import { AppViewType } from '../constants/AppViewType'
 import ExpenseForm from './ExpenseForm'
@@ -67,7 +68,7 @@ const AppMain = ({ appViewType }) => {
 }
 
 AppMain.propTypes = {
-  appViewType: AppViewType.isRequired
+  appViewType: PropTypes.number.isRequired
 }
 
 export default AppMain

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './LoadingIndicator.css'
+import './LoadingIndicator.scss'
 
 const LoadingIndicator = ({ show }) => {
   return (

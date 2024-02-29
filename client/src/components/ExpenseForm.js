@@ -5,17 +5,15 @@ import ExpenseTypeSelector from './ExpenseTypeSelector.js'
 import { ExpenseType } from '../constants/ExpenseType.js'
 import LoadingIndicator from './LoadingIndicator.js'
 // {
-//   "id": "59f90b59-704e-46e3-9026-e242bca7971f",
-//   "_partitionKey": "",
-//   "inputDate": "2021/11/15",
-//   "amount(yen)": 63350,
-//   "categoryColor": "00c7ff",
-//   "categoryIcon": "categoryDefault14",
-//   "categoryId": 15,
-//   "categoryIndex": 16,
-//   "categoryName": "副業",
-//   "memo": "company2",
-//   "type": "Income"
+// "year": 2024,
+// "month": 1,
+// "day": 19,
+// "inputDate": "2024-01-19",
+// "amount": 1000,
+// "categoryId": 10,
+// "title": "スーパー",
+// "description": "野菜果物買う",
+// "type": 0,
 // }
 
 const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCancelFunctionFromParent }) => {
@@ -32,8 +30,12 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
   const onFormSubmit = async (event) => {
     event.preventDefault()
 
+    const [year, month, day] = enteredDate.split('-').map((str) => Number(str))
     const enteredExpense = {
       inputDate: enteredDate,
+      year,
+      month,
+      day,
       title: enteredTitle,
       description: enteredDescription,
       amount: Number(enteredAmount),
