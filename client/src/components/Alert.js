@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './Alert.css'
 
 const Alert = ({ show, message }) => {
@@ -9,6 +10,11 @@ const Alert = ({ show, message }) => {
       </div>
     </section>
   )
+}
+
+Alert.propTypes = {
+  show: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired
 }
 
 export default Alert

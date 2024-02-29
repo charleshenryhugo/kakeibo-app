@@ -1,5 +1,6 @@
 import React from 'react'
-import './ExpenseTypeSelector.css'
+import PropTypes from 'prop-types'
+import './ExpenseTypeSelector.scss'
 import { ExpenseTypeToText } from '../constants/ExpenseType.js'
 
 const ExpenseTypeSelector = ({ expenseType, setExpenseType, expenseTypeOptions }) => {
@@ -16,6 +17,12 @@ const ExpenseTypeSelector = ({ expenseType, setExpenseType, expenseTypeOptions }
       ))}
     </div>
   )
+}
+
+ExpenseTypeSelector.propTypes = {
+  expenseType: PropTypes.number.isRequired,
+  setExpenseType: PropTypes.func.isRequired,
+  expenseTypeOptions: PropTypes.array.isRequired
 }
 
 export default ExpenseTypeSelector

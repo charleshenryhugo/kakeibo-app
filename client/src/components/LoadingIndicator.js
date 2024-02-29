@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './LoadingIndicator.css'
 
 const LoadingIndicator = ({ show }) => {
@@ -9,6 +10,10 @@ const LoadingIndicator = ({ show }) => {
       </div>
     </section>
   )
+}
+
+LoadingIndicator.propTypes = {
+  show: PropTypes.bool.isRequired
 }
 
 export default LoadingIndicator
