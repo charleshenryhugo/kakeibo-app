@@ -1,4 +1,5 @@
 import React from 'react'
+import './MenuView.scss'
 
 const Menu = () => {
   return (

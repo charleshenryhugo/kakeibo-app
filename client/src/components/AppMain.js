@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import './AppMain.scss'
 import { AppViewType } from '../constants/AppViewType'
 import ExpenseForm from './ExpenseForm'
-import Calendar from './Calendar'
-import Report from './Report'
-import Menu from './Menu'
-import Alert from './Alert'
+import CalendarView from './CalendarView'
+import ReportView from './ReportView'
+import MenuView from './MenuView'
+import Alert from './UI/Alert'
 
 const AppMain = ({ appViewType }) => {
   const onSubmit = async (expenseItem) => {
@@ -48,14 +48,14 @@ const AppMain = ({ appViewType }) => {
     if (appViewType === AppViewType.expenseForm) {
       return <ExpenseForm onSubmit={onSubmit} onCanceled={() => {}} />
     }
-    if (appViewType === AppViewType.calendar) {
-      return <Calendar />
+    if (appViewType === AppViewType.calendarView) {
+      return <CalendarView />
     }
-    if (appViewType === AppViewType.menu) {
-      return <Menu />
+    if (appViewType === AppViewType.menuView) {
+      return <MenuView />
     }
-    if (appViewType === AppViewType.report) {
-      return <Report />
+    if (appViewType === AppViewType.reportView) {
+      return <ReportView />
     }
   }
 

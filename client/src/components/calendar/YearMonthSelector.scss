@@ -1,0 +1,24 @@
+@use '../../styles/colors.scss';
+
+.yearMonthSelector {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.6rem;
+
+  &__input {
+    width: 300px;
+    height: 50px;
+  }
+  
+  &__prev,
+  &__next {
+    color: colors.$sakura-branch;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}

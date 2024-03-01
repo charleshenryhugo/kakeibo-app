@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import './ExpenseForm.scss'
 import ExpenseTypeSelector from './ExpenseTypeSelector.js'
 import { ExpenseType } from '../constants/ExpenseType.js'
-import LoadingIndicator from './LoadingIndicator.js'
+import LoadingIndicator from './UI/LoadingIndicator.js'
 // {
 // "year": 2024,
 // "month": 1,
@@ -18,7 +18,7 @@ import LoadingIndicator from './LoadingIndicator.js'
 
 const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCancelFunctionFromParent }) => {
   const today = new Date()
-  const [enteredDate, setEnteredDate] = useState(`${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getDate()}`)
+  const [enteredDate, setEnteredDate] = useState(`${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`)
   const [enteredTitle, setEnteredTitle] = useState('')
   const [enteredDescription, setEnteredDescription] = useState('')
   const [enteredAmount, setEnteredAmount] = useState('0')

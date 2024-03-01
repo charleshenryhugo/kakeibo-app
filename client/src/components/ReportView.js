@@ -1,9 +1,10 @@
 import React from 'react'
+import './ReportView.scss'
 
-const Report = () => {
+const ReportView = () => {
   return (
     <section className="ReportWrapper"></section>
   )
 }
 
-export default Report
+export default ReportView

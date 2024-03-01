@@ -1,13 +1,13 @@
 export const AppViewType = {
   expenseForm: 0,
-  calendar: 1,
-  report: 2,
-  menu: 3
+  calendarView: 1,
+  reportView: 2,
+  menuView: 3
 }
 
 export const AppViewTypeToText = {
   [AppViewType.expenseForm]: '入力',
-  [AppViewType.calendar]: 'カレンダー',
-  [AppViewType.report]: 'レポート',
-  [AppViewType.menu]: 'メニュー'
+  [AppViewType.calendarView]: 'カレンダー',
+  [AppViewType.reportView]: 'レポート',
+  [AppViewType.menuView]: 'メニュー'
 }

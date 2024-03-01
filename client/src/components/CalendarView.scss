@@ -1,12 +1,13 @@
 @use '../styles/colors.scss';
 
-.calendar {
+.calendarView {
   &Wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 80%;
+    padding: 1rem;
 
     input {
       font-size: 1.6rem;
