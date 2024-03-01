@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 // import logo from './logo.svg'
-// import './App.css'
+import './App.scss'
 
 import AppFooter from './components/AppFooter'
 import AppHeader from './components/AppHeader.js'
@@ -11,7 +11,7 @@ function App () {
   const [appViewType, setAppViewType] = useState(AppViewType.expenseForm)
 
   return (
-    <section className="App">
+    <section className="app">
       <AppHeader appViewType={appViewType} />
       <AppMain appViewType={appViewType} />
       <AppFooter appViewType={appViewType} setAppViewType={setAppViewType}/>

@@ -7,29 +7,52 @@
     width: 100%;
   }
 
-  &__monthlyTotal {}
+  &__monthlyTotal {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  &__dailyTotal {}
+    &Item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      &Title {
+        font-size: 1.3rem;
+      }
+
+      &--income {
+        color: colors.$sea-blue;
+      }
+
+      &--expense {
+        color: colors.$red;
+      }
+    }
+  }
+
+  &__dailyTotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem;
+    font-size: 1.3rem;
+    background-color: colors.$light-grey;
+  }
 
   &__expenseItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid colors.$sakura-bark;
+    border-top: 1px solid colors.$grey;
     padding: 0.5rem;
   }
 
   &__expenseAmount {
     &.income {
-      color: blue;
+      color: colors.$sea-blue;
     }
-  }
-
-  &__expenseDate {
-    display: flex;
-    align-items: center;
-    padding: 0.3rem;
-    font-size: 1.3rem;
-    background-color: colors.$light-grey;
   }
 }

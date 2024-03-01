@@ -4,6 +4,7 @@ import './ExpenseForm.scss'
 import ExpenseTypeSelector from './ExpenseTypeSelector.js'
 import { ExpenseType } from '../constants/ExpenseType.js'
 import LoadingIndicator from './UI/LoadingIndicator.js'
+import DateSelector from './calendar/DateSelector.js'
 // {
 // "year": 2024,
 // "month": 1,
@@ -146,14 +147,8 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
       <form className='expenseForm' onSubmit={onFormSubmit}>
         <div className='expenseForm__inputs'>
           <div className='expenseForm__input'>
-            <label>日付</label>
-            <input
-              type='date'
-              min='2000-01-01'
-              max='2099-12-31'
-              value={enteredDate} /* 2 way binding */
-              onChange={(event) => setEnteredDate(event.target.value)}
-            />
+            <label htmlFor='expenseDate'>日付</label>
+            <DateSelector className="expenseForm__dateSelector" id="expenseDate" date={enteredDate} setDate={setEnteredDate} />
           </div>
           <div className='expenseForm__input'>
             <label htmlFor='expenseTitle'>説明</label>
@@ -196,12 +191,10 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
         </div>
 
         <div className='expenseForm__actions'>
-          <div>
-            {/* <button onClick={onFormCancel} type='button'>Cancel</button> */}
-            <button disabled={!enteredTitle || isNaN(enteredAmount) || !enteredDate || !enteredCategoryId} type='submit'>
-              支出を入力する
-            </button>
-          </div>
+          {/* <button onClick={onFormCancel} type='button'>Cancel</button> */}
+          <button className='expenseForm__submitButton' disabled={!enteredTitle || isNaN(enteredAmount) || !enteredDate || !enteredCategoryId} type='submit'>
+            支出を入力する
+          </button>
 
           <label htmlFor="receiptUpload">レシートをスキャンする</label>
           <input

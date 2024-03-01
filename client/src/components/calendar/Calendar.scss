@@ -1,3 +1,30 @@
-.calendarWrapper {
-  display: flex;
+@use '../../styles/colors.scss';
+
+.calendar {
+  &Wrapper {
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid colors.$light-grey;
+  }
+
+  font-size: 1.6rem;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+
+  &__day {
+    background-color: colors.$white;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid colors.$sakura-bark;
+  }
+
+  &__dayOfWeek {
+    background-color: colors.$light-grey;
+    color: colors.$sakura-branch;
+    padding: 4px 8px;
+    text-align: center;
+    font-size: 1.3rem;
+  }
 }

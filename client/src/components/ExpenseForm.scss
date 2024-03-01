@@ -6,14 +6,44 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 100%;
+
+  &__actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  &__submitButton {
+    display: block;
+    width: 95%;
+    height: 40px;
+    font-size: 2rem;
+    background-color: colors.$sakura-blossom;
+    color: colors.$white;
+    border-radius: 20px;
+    border-style: none;
+
+    &:disabled {
+      background-color: colors.$light-grey;
+      color: colors.$white;
+      cursor: not-allowed;
+    }
+  }
+
+  &__dateSelector {
+    width: 70%;
+  }
 
   &Wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: 100%;
   }
 
   &__inputs {
@@ -33,9 +63,9 @@
     align-items: center;
     border-bottom: 0.5px solid colors.$grey;
 
-    input,
-    textarea {
-      width: 50%;
+    > input,
+    > textarea {
+      width: 70%;
       font-size: 1.6rem;
       padding: 0.3rem;
     }
