@@ -48,9 +48,18 @@
     align-items: center;
     border-top: 1px solid colors.$grey;
     padding: 0.5rem;
+
+    &:hover {
+      cursor: pointer;
+      background-color: colors.$light-grey;
+    }
   }
 
   &__expenseAmount {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     &.income {
       color: colors.$sea-blue;
     }

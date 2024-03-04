@@ -1,52 +1,33 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import './ExpensesList.scss'
 import { ExpenseType } from '../constants/ExpenseType'
 import dayjs from 'dayjs'
 import { dayToText } from '../constants/Date'
+import UpdateExpenseForm from './UpdateExpenseForm'
+import RightArrow from './Icon/RightArrow'
 
-const ExpensesList = ({ yearMonth }) => {
-  const [expenses, setExpenses] = useState({})
-  const [expenseTotal, setExpenseTotal] = useState(0)
-  const [incomeTotal, setIncomeTotal] = useState(0)
+const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onItemDelete }) => {
+  const expenseTotal = expenses.reduce((acc, cur) => {
+    return cur.type === ExpenseType.expense ? acc + cur.amount : acc
+  }, 0)
 
-  useEffect(() => {
-    const updateExpenses = async () => {
-      const [year, month] = yearMonth.split('-')
-      const response = await fetch('/api/getMonthlyExpenses', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ year, month })
-      })
+  const incomeTotal = expenses.reduce((acc, cur) => {
+    return cur.type === ExpenseType.income ? acc + cur.amount : acc
+  }, 0)
 
-      const { result } = await response.json()
-      const expensesGroupedByDate = result.reduce((acc, cur) => {
-        const date = cur.inputDate
-        if (acc[date]) {
-          acc[date].push(cur)
-        } else {
-          acc[date] = [cur]
-        }
-        return acc
-      }, {})
+  const [selectedExpenseItem, setSelectExpenseItem] = useState(null)
+  const [isUpdateFormOpen, setIsUpdateFormOpen] = useState(false)
 
-      const expenseTotal = result.reduce((acc, cur) => {
-        return cur.type === ExpenseType.expense ? acc + cur.amount : acc
-      }, 0)
+  const onExpenseItemClick = (expenseItem) => {
+    setSelectExpenseItem(() => expenseItem)
+    setIsUpdateFormOpen(true)
+  }
 
-      const incomeTotal = result.reduce((acc, cur) => {
-        return cur.type === ExpenseType.income ? acc + cur.amount : acc
-      }, 0)
-
-      setExpenses(() => expensesGroupedByDate)
-      setExpenseTotal(expenseTotal)
-      setIncomeTotal(incomeTotal)
-    }
-
-    updateExpenses()
-  }, [yearMonth])
+  const closeUpdateForm = () => {
+    setIsUpdateFormOpen(false)
+    setSelectExpenseItem(null)
+  }
 
   return (
     <section className="expensesListWrapper">
@@ -68,25 +49,26 @@ const ExpensesList = ({ yearMonth }) => {
           </div>
         </div>
         {
-          Object.keys(expenses).map((date, index) => {
+          Object.keys(expensesGroupedByDate).map((date, index) => {
             return (
               <div key={index} id={`${date}`}>
                 <div className='expensesList__dailyTotal'>
                   <div className='expensesList__dailyTotalAmount'>{ `${dayjs(date).format('YYYY年MM月DD日')}(${dayToText[dayjs(date).day()]})` }</div>
                   <div className='expensesList__dailyTotalAmount'>{
-                    expenses[date].reduce((acc, cur) => {
+                    expensesGroupedByDate[date].reduce((acc, cur) => {
                       return cur.type === ExpenseType.expense ? acc - cur.amount : acc + cur.amount
                     }, 0).toLocaleString()
                   }円
                   </div>
                 </div>
                 {
-                  expenses[date].map((expense, index) => {
+                  expensesGroupedByDate[date].map((expense, index) => {
                     return (
-                      <div key={index} className='expensesList__expenseItem'>
+                      <div key={index} className='expensesList__expenseItem' onClick={() => onExpenseItemClick(expense)}>
                         <div>{expense.categoryId} ({expense.title})</div>
                         <div className={`expensesList__expenseAmount ${expense.type === ExpenseType.income ? 'income' : ''}`}>
-                          {Number(expense.amount).toLocaleString()}円
+                          <span>{Number(expense.amount).toLocaleString()}円</span>
+                          <RightArrow width='12px' height='12px' />
                         </div>
                       </div>
                     )
@@ -97,12 +79,23 @@ const ExpensesList = ({ yearMonth }) => {
           })
         }
       </div>
+      {isUpdateFormOpen
+        ? <UpdateExpenseForm
+            expenseItem={selectedExpenseItem}
+            onSubmit={(updatedExpenseItem) => { closeUpdateForm(); onUpdateFormSubmit(updatedExpenseItem) }}
+            onCancel={() => closeUpdateForm()}
+            onItemDelete={(deletedExpenseItem) => { closeUpdateForm(); onItemDelete(deletedExpenseItem) } }
+          />
+        : ''}
     </section>
   )
 }
 
 ExpensesList.propTypes = {
-  yearMonth: PropTypes.string.isRequired // 2024-02
+  expenses: PropTypes.array.isRequired,
+  expensesGroupedByDate: PropTypes.object.isRequired,
+  onUpdateFormSubmit: PropTypes.func.isRequired,
+  onItemDelete: PropTypes.func.isRequired
 }
 
 export default ExpensesList

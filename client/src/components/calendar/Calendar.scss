@@ -15,9 +15,33 @@
 
   &__day {
     background-color: colors.$white;
-    padding: 1rem;
-    text-align: center;
+    padding: 0 2px;
     border: 1px solid colors.$sakura-bark;
+    display: grid;
+    font-size: 1.3rem;
+    grid-template-columns: 1fr 1fr 1fr; 
+    grid-template-rows: 1fr 1fr 1fr; 
+    /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
+    grid-template-areas:
+      "date . ."
+      "Income Income Income"
+      "Expense Expense Expense";
+  }
+
+  &__date {
+    grid-area: date;
+  }
+
+  &__dailyIncome {
+    grid-area: Income;
+    text-align: right;
+    color: colors.$sea-blue;
+  }
+
+  &__dailyExpense {
+    grid-area: Expense;
+    text-align: right;
+    color: colors.$red;
   }
 
   &__dayOfWeek {

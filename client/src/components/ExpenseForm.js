@@ -5,17 +5,8 @@ import ExpenseTypeSelector from './ExpenseTypeSelector.js'
 import { ExpenseType } from '../constants/ExpenseType.js'
 import LoadingIndicator from './UI/LoadingIndicator.js'
 import DateSelector from './calendar/DateSelector.js'
-// {
-// "year": 2024,
-// "month": 1,
-// "day": 19,
-// "inputDate": "2024-01-19",
-// "amount": 1000,
-// "categoryId": 10,
-// "title": "スーパー",
-// "description": "野菜果物買う",
-// "type": 0,
-// }
+import Alert from './UI/Alert.js'
+import Expense from '../repositories/Expense.js'
 
 const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCancelFunctionFromParent }) => {
   const today = new Date()
@@ -27,13 +18,17 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
   const [expenseType, setExpenseType] = useState(ExpenseType.expense)
 
   const [loading, setLoading] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
 
   const onFormSubmit = async (event) => {
     event.preventDefault()
+    setLoading(true)
 
     const [year, month, day] = enteredDate.split('-').map((str) => Number(str))
-    const enteredExpense = {
+    const newExpenseItem = new Expense({
       inputDate: enteredDate,
+      lastUpdated: enteredDate,
       year,
       month,
       day,
@@ -42,6 +37,28 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
       amount: Number(enteredAmount),
       categoryId: Number(enteredCategoryId),
       type: expenseType
+    })
+
+    try {
+      const data = await newExpenseItem.commit()
+
+      if (Number(data.statusCode) === 201) {
+        setAlertMessage('入力が成功しました。')
+      } else if (Number(data.statusCode) === 200) {
+        setAlertMessage('更新が成功しました。')
+      } else {
+        setAlertMessage('入力が失敗しました。もう一度試してください。')
+      }
+      setShowAlert(true)
+      setTimeout(() => {
+        setShowAlert(false)
+      }, 1000)
+    } catch (error) {
+      setAlertMessage('入力が失敗しました。もう一度試してください。')
+      setShowAlert(true)
+      setTimeout(() => {
+        setShowAlert(false)
+      }, 2000)
     }
 
     setEnteredTitle('')
@@ -49,20 +66,10 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
     setEnteredAmount('0')
     setEnteredCategoryId('0')
 
-    setLoading(true)
-    await onSubmitFunctionFromParent(enteredExpense)
+    onSubmitFunctionFromParent(newExpenseItem)
+
     setLoading(false)
   }
-
-  // const onFormCancel = (event) => {
-  //   setEnteredTitle('')
-  //   setEnteredDescription('')
-  //   setEnteredAmount(0)
-  //   setEnteredCategoryId(0)
-  //   setEnteredType('Expense')
-
-  //   onCancelFunctionFromParent()
-  // }
 
   const [receiptImage, setReceiptImage] = useState({ src: '', alt: '' })
   const onImageUpload = async (event) => {
@@ -142,6 +149,7 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
 
   return (
     <section className='expenseFormWrapper'>
+      <Alert show={ showAlert } message={ alertMessage } />
       <LoadingIndicator show={loading} />
       <ExpenseTypeSelector expenseType={expenseType} setExpenseType={setExpenseType} expenseTypeOptions={Object.values(ExpenseType)}/>
       <form className='expenseForm' onSubmit={onFormSubmit}>
@@ -191,7 +199,6 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
         </div>
 
         <div className='expenseForm__actions'>
-          {/* <button onClick={onFormCancel} type='button'>Cancel</button> */}
           <button className='expenseForm__submitButton' disabled={!enteredTitle || isNaN(enteredAmount) || !enteredDate || !enteredCategoryId} type='submit'>
             支出を入力する
           </button>

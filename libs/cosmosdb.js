@@ -60,3 +60,17 @@ export const executeUpsert = async (data) => {
 
   return result
 }
+
+export const executeDelete = async (id, partitionKeyValues) => {
+  try {
+    const result = await container.item(id, partitionKeyValues).delete()
+    console.log(result)
+    if (result.statusCode === 204) {
+      console.log("Deleted item id: " + id)
+    }
+    return result
+  } catch (error) {
+    console.error(error)
+    return { statusCode: 400 }
+  }
+}
