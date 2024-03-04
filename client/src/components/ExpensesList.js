@@ -49,7 +49,7 @@ const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onI
           </div>
         </div>
         {
-          Object.keys(expensesGroupedByDate).map((date, index) => {
+          Object.keys(expensesGroupedByDate).sort((date1, date2) => date2.localeCompare(date1)).map((date, index) => {
             return (
               <div key={index} id={`${date}`}>
                 <div className='expensesList__dailyTotal'>

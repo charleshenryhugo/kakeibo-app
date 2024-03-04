@@ -13,6 +13,7 @@ const UpdateExpenseForm = ({ expenseItem, onSubmit: onSubmitFunctionFromParent, 
   const [enteredTitle, setEnteredTitle] = useState(expenseItem.title)
   const [enteredDescription, setEnteredDescription] = useState(expenseItem.description)
   const [enteredAmount, setEnteredAmount] = useState(expenseItem.amount)
+  // eslint-disable-next-line no-unused-vars
   const [enteredCategoryId, setEnteredCategoryId] = useState(expenseItem.categoryId)
 
   const [showAlert, setShowAlert] = useState(false)
@@ -99,7 +100,14 @@ const UpdateExpenseForm = ({ expenseItem, onSubmit: onSubmitFunctionFromParent, 
       <div className='updateExpenseForm__inputs'>
           <div className='updateExpenseForm__input'>
             <label htmlFor='expenseDate'>日付</label>
-            <DateSelector className='updateExpenseForm__dateSelector' id="expenseDate" date={enteredDate} setDate={setEnteredDate} />
+            <DateSelector
+              className='updateExpenseForm__dateSelector'
+              id="expenseDate"
+              date={enteredDate}
+              setDate={setEnteredDate}
+              minDate={`${expenseItem.year}-${expenseItem.month.toString().padStart(2, '0')}-01`}
+              maxDate={`${expenseItem.year}-${expenseItem.month.toString().padStart(2, '0')}-${new Date(expenseItem.year, expenseItem.month, 0).getDate()}`}
+            />
           </div>
           <div className='updateExpenseForm__input'>
             <label htmlFor='expenseTitle'>説明</label>

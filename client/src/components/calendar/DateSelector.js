@@ -4,7 +4,7 @@ import './DateSelector.scss'
 import LeftArrow from '../Icon/LeftArrow'
 import RightArrow from '../Icon/RightArrow'
 
-const DateSelector = ({ date, setDate, ...props }) => {
+const DateSelector = ({ date, setDate, minDate = '2000-01-01', maxDate = '2099-12-31', ...props }) => {
   const adjustDate = (yearMonthDay, offset) => {
     const date = new Date(yearMonthDay)
     date.setDate(date.getDate() + offset)
@@ -23,8 +23,8 @@ const DateSelector = ({ date, setDate, ...props }) => {
         id={props.id}
         className='dateSelector__input'
         type='date'
-        min='2000-01-01'
-        max='2099-12-31'
+        min={minDate}
+        max={maxDate}
         value={date} /* 2 way binding */
         onChange={(event) => setDate(event.target.value)}
       />
@@ -38,6 +38,8 @@ const DateSelector = ({ date, setDate, ...props }) => {
 DateSelector.propTypes = {
   date: PropTypes.string.isRequired,
   setDate: PropTypes.func.isRequired,
+  minDate: PropTypes.string,
+  maxDate: PropTypes.string,
   props: PropTypes.object,
   id: PropTypes.string,
   className: PropTypes.string
