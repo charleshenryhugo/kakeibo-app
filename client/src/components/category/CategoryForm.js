@@ -18,7 +18,9 @@ const CategoryForm = ({ onClose, updatingCategoryItem = null }) => {
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const [enteredText, setEnteredText] = useState(categoryItem?.text ?? '')
+  // eslint-disable-next-line no-unused-vars
   const [enteredIconName, setEnteredIconName] = useState(categoryItem.iconName)
+  // eslint-disable-next-line no-unused-vars
   const [enteredIconColor, setEnteredIconColor] = useState(categoryItem.iconColor)
 
   const onSubmit = async () => {
