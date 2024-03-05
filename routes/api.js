@@ -1,7 +1,7 @@
 import fs from 'fs'
 import multer from 'multer'
 import express from 'express'
-import { executeSqlFind, executeUpsert, executeDelete } from '../libs/cosmosdb.js'
+import { executeSqlFindExpense, executeUpsertExpense, executeDeleteExpense, executeFetchCategories, executeDeleteCategory, executeUpsertCategory } from '../libs/cosmosdb.js'
 import { analyzeReceiptImage } from '../libs/documentIntelligence.js'
 
 const router = express.Router()
@@ -12,21 +12,21 @@ router.get('/serverStatus', (req, res, next) => {
 
 router.post('/upsertExpense', async (req, res) => {
   const expenseData = req.body
-  const result = await executeUpsert(expenseData)
+  const result = await executeUpsertExpense(expenseData)
 
   res.json({ statusCode: result.statusCode })
 })
 
 router.post('/deleteExpense', async (req, res) => {
-  const { id, year, month, categoryId } = req.body
-  const result = await executeDelete(id, [Number(year), Number(month), Number(categoryId)])
+  const { id, year, month } = req.body
+  const result = await executeDeleteExpense(id, [Number(year), Number(month)])
 
   res.json({ statusCode: result.statusCode })
 })
 
 router.post('/getMonthlyExpenses', async (req, res) => {
   const { year, month } = req.body
-  const result = await executeSqlFind({year, month})
+  const result = await executeSqlFindExpense({year, month})
 
   res.json({ result })
 })
@@ -43,6 +43,25 @@ router.post('/analyzeReceiptImage', upload.single('image'), async (req, res) => 
   } catch (error) {
     res.json({ error: error.message })
   }
+})
+
+router.get('/getCategories', async (_req, res) => {
+  const result = await executeFetchCategories()
+  res.json({ result })
+})
+
+router.post('/upsertCategory', async (req, res) => {
+  const categoryData = req.body
+  const result = await executeUpsertCategory(categoryData)
+
+  res.json({ statusCode: result.statusCode, item: result.resource })
+})
+
+router.post('/deleteCategory', async (req, res) => {
+  const { id } = req.body
+  const result = await executeDeleteCategory(id)
+
+  res.json({ statusCode: result.statusCode })
 })
 
 export default router

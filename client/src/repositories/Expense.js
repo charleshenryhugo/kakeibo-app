@@ -44,7 +44,7 @@ class Expense {
         title: this.title,
         description: this.description,
         amount: Number(this.amount),
-        categoryId: Number(this.categoryId),
+        categoryId: this.categoryId,
         type: this.type,
         ...(this.id ? { id: this.id } : {})
       })

@@ -7,6 +7,7 @@ import LoadingIndicator from './UI/LoadingIndicator.js'
 import DateSelector from './calendar/DateSelector.js'
 import Alert from './UI/Alert.js'
 import Expense from '../repositories/Expense.js'
+import CategoryPicker from './category/CategoryPicker.js'
 
 const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCancelFunctionFromParent }) => {
   const today = new Date()
@@ -35,7 +36,7 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
       title: enteredTitle,
       description: enteredDescription,
       amount: Number(enteredAmount),
-      categoryId: Number(enteredCategoryId),
+      categoryId: enteredCategoryId,
       type: expenseType
     })
 
@@ -151,7 +152,7 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
     <section className='expenseFormWrapper'>
       <Alert show={ showAlert } message={ alertMessage } />
       <LoadingIndicator show={loading} />
-      <ExpenseTypeSelector expenseType={expenseType} setExpenseType={setExpenseType} expenseTypeOptions={Object.values(ExpenseType)}/>
+      <ExpenseTypeSelector expenseType={expenseType} setExpenseType={setExpenseType} />
       <form className='expenseForm' onSubmit={onFormSubmit}>
         <div className='expenseForm__inputs'>
           <div className='expenseForm__input'>
@@ -194,9 +195,7 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
           </div>
         </div>
 
-        <div className='expenseForm__categories'>
-          カテゴリー
-        </div>
+        <CategoryPicker categoryId={enteredCategoryId} setCategoryId={setEnteredCategoryId} expenseType={expenseType}/>
 
         <div className='expenseForm__actions'>
           <button className='expenseForm__submitButton' disabled={!enteredTitle || isNaN(enteredAmount) || !enteredDate || !enteredCategoryId} type='submit'>

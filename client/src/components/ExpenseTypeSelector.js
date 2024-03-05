@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './ExpenseTypeSelector.scss'
-import { ExpenseTypeToText } from '../constants/ExpenseType.js'
+import { ExpenseType, ExpenseTypeToText } from '../constants/ExpenseType.js'
 
-const ExpenseTypeSelector = ({ expenseType, setExpenseType, expenseTypeOptions }) => {
+const ExpenseTypeSelector = ({ expenseType, setExpenseType, expenseTypeOptions = Object.values(ExpenseType) }) => {
   return (
     <div className='expenseTypeSelector'>
       {expenseTypeOptions.map((typeOption, index) => (
@@ -22,7 +22,7 @@ const ExpenseTypeSelector = ({ expenseType, setExpenseType, expenseTypeOptions }
 ExpenseTypeSelector.propTypes = {
   expenseType: PropTypes.number.isRequired,
   setExpenseType: PropTypes.func.isRequired,
-  expenseTypeOptions: PropTypes.array.isRequired
+  expenseTypeOptions: PropTypes.array
 }
 
 export default ExpenseTypeSelector

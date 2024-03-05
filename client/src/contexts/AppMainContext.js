@@ -11,3 +11,5 @@ import { createContext } from 'react'
 }
 */
 export const LatestExpenseListContext = createContext({})
+
+export const CategoriesContext = createContext([])

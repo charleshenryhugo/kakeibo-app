@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import './ExpensesList.scss'
 import { ExpenseType } from '../constants/ExpenseType'
@@ -6,8 +6,15 @@ import dayjs from 'dayjs'
 import { dayToText } from '../constants/Date'
 import UpdateExpenseForm from './UpdateExpenseForm'
 import RightArrow from './Icon/RightArrow'
+import { CategoriesContext } from '../contexts/AppMainContext'
 
 const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onItemDelete }) => {
+  const { categories } = useContext(CategoriesContext)
+  const categoryMap = categories.reduce((acc, cur) => {
+    acc[cur.id] = cur
+    return acc
+  }, {})
+
   const expenseTotal = expenses.reduce((acc, cur) => {
     return cur.type === ExpenseType.expense ? acc + cur.amount : acc
   }, 0)
@@ -65,7 +72,7 @@ const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onI
                   expensesGroupedByDate[date].map((expense, index) => {
                     return (
                       <div key={index} className='expensesList__expenseItem' onClick={() => onExpenseItemClick(expense)}>
-                        <div>{expense.categoryId} ({expense.title})</div>
+                        <div>{categoryMap[expense.categoryId]?.text ?? ''} ({expense.title})</div>
                         <div className={`expensesList__expenseAmount ${expense.type === ExpenseType.income ? 'income' : ''}`}>
                           <span>{Number(expense.amount).toLocaleString()}円</span>
                           <RightArrow width='12px' height='12px' />

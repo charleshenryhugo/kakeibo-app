@@ -5,6 +5,7 @@ import LoadingIndicator from './UI/LoadingIndicator'
 import DateSelector from './calendar/DateSelector'
 import Alert from './UI/Alert'
 import Expense from '../repositories/Expense'
+import CategoryPicker from './category/CategoryPicker'
 
 const UpdateExpenseForm = ({ expenseItem, onSubmit: onSubmitFunctionFromParent, onCancel: onCancelFunctionFromParent, onItemDelete: onItemDeleteFunctionFromParent }) => {
   const [loading, setLoading] = useState(false)
@@ -34,7 +35,7 @@ const UpdateExpenseForm = ({ expenseItem, onSubmit: onSubmitFunctionFromParent, 
       title: enteredTitle,
       description: enteredDescription,
       amount: Number(enteredAmount),
-      categoryId: Number(enteredCategoryId),
+      categoryId: enteredCategoryId,
       type: expenseItem.type
     })
 
@@ -145,9 +146,7 @@ const UpdateExpenseForm = ({ expenseItem, onSubmit: onSubmitFunctionFromParent, 
           </div>
         </div>
 
-        <div className='updateExpenseForm__categories'>
-          カテゴリー
-        </div>
+        <CategoryPicker categoryId={enteredCategoryId} setCategoryId={setEnteredCategoryId} expenseType={expenseItem.type}/>
 
         <div className='updateExpenseForm__actions'>
           <button className='updateExpenseForm__submitButton' type='submit'>

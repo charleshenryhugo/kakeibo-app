@@ -11,14 +11,14 @@
   font-size: 1.6rem;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
+  gap: 1px;
 
   &__day {
     background-color: colors.$white;
     padding: 0 2px;
     border: 1px solid colors.$sakura-bark;
     display: grid;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     grid-template-columns: 1fr 1fr 1fr; 
     grid-template-rows: 1fr 1fr 1fr; 
     /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
@@ -43,6 +43,12 @@
     text-align: right;
     color: colors.$red;
   }
+
+  &__dailyincome, &__dailyExpense {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } 
 
   &__dayOfWeek {
     background-color: colors.$light-grey;

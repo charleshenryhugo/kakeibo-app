@@ -5,11 +5,13 @@ import { CosmosClient } from '@azure/cosmos'
 
 const cosmosSecret = process.env.COSMOS_CONNECTION_STRING
 const databaseName = process.env.COSMOS_DATABASE_NAME
-const containerName = process.env.COSMOS_CONTAINER_NAME
+const expensesContainerName = process.env.COSMOS_EXPENSES_CONTAINER_NAME
+const categoriesContainerName = process.env.COSMOS_CATEGORIES_CONTAINER_NAME
 
 const cosmosClient = new CosmosClient(cosmosSecret);
 const { database } = await cosmosClient.databases.createIfNotExists({ id: databaseName })
-const { container } = await database.containers.createIfNotExists({ id: containerName })
+const { container: expensesContainer } = await database.containers.createIfNotExists({ id: expensesContainerName })
+const { container: categoriesContainer } = await database.containers.createIfNotExists({ id: categoriesContainerName })
 
 /**
  * Executes a SQL query on the Expenses container in Cosmos DB.
@@ -29,7 +31,8 @@ const { container } = await database.containers.createIfNotExists({ id: containe
  *
  * @async
  */
-export const executeSqlFind = async (propNameValuePairs) => {
+export const executeSqlFindExpense = async (propNameValuePairs) => {
+  const container = expensesContainer
   try {
     const whereClause = Object.keys(propNameValuePairs).map((propertyName, index) => {
       return `e.${propertyName} = ${propNameValuePairs[propertyName]}`
@@ -47,13 +50,14 @@ export const executeSqlFind = async (propNameValuePairs) => {
   }
 }
 
-export const executeUpsert = async (data) => {
+export const executeUpsertExpense = async (data) => {
+  const container = expensesContainer
   const result = await container.items.upsert(data)
 
   if (result.statusCode === 201) {
-    console.log("Inserted data")
+    console.log("Inserted expense")
   } else if (result.statusCode === 200) {
-    console.log("Updated data")
+    console.log("Updated expense")
   } else {
     console.log(`unexpected statusCode ${result.statusCode}`)
   }
@@ -61,16 +65,56 @@ export const executeUpsert = async (data) => {
   return result
 }
 
-export const executeDelete = async (id, partitionKeyValues) => {
+export const executeDeleteExpense = async (id, partitionKeyValues) => {
+  const container = expensesContainer
   try {
     const result = await container.item(id, partitionKeyValues).delete()
-    console.log(result)
     if (result.statusCode === 204) {
-      console.log("Deleted item id: " + id)
+      console.log("Deleted expense item id: " + id)
     }
     return result
   } catch (error) {
     console.error(error)
-    return { statusCode: 400 }
+    return { statusCode: error.statusCode }
+  }
+}
+
+export const executeUpsertCategory = async (data) => {
+  const container = categoriesContainer
+  const result = await container.items.upsert(data)
+
+  if (result.statusCode === 201) {
+    console.log("Inserted category")
+  } else if (result.statusCode === 200) {
+    console.log("Updated category")
+  } else {
+    console.log(`unexpected statusCode ${result.statusCode}`)
+  }
+
+  return result
+}
+
+export const executeFetchCategories = async () => {
+  const container = categoriesContainer
+  try {
+    const { resources: items } = await container.items.readAll().fetchAll()
+    return items
+  } catch (error) {
+    console.error(error)
+    return [{ error }]
+  }
+}
+
+export const executeDeleteCategory = async (id) => {
+  const container = categoriesContainer
+  try {
+    const result = await container.item(id, [id]).delete()
+    if (result.statusCode === 204) {
+      console.log("Deleted category item id: " + id)
+    }
+    return result
+  } catch (error) {
+    console.error(error)
+    return { statusCode: error.statusCode }
   }
 }

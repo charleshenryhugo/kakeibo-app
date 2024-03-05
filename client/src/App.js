@@ -13,8 +13,8 @@ function App () {
   return (
     <section className="app">
       <AppHeader appViewType={appViewType} />
-      <AppMain appViewType={appViewType} />
       <AppFooter appViewType={appViewType} setAppViewType={setAppViewType}/>
+      <AppMain appViewType={appViewType} />
     </section>
   )
 }
