@@ -1,6 +1,99 @@
+@use '../../styles/colors.scss';
+
 .categoryForm {
+  width: 100%;
+  padding: 1rem;
+
   &Wrapper {
+    background-color: colors.$background-light-grey;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    overflow: auto;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    padding: 1rem;
+    background-color: colors.$white;
+    border-bottom: 1px solid colors.$sakura-bark;
+  }
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &__input {
+    width: 100%;
+    border-bottom: 1px solid colors.$grey;
+
+    &Name {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+
+      input {
+        width: 70%;
+        height: 4rem;
+        padding: 0 1rem;
+        font-size: 1.6rem;
+      }
+    }
+  }
+
+  &__closeButton {
+    cursor: pointer;
+
+    &:hover {
+      background-color: colors.$light-grey;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    gap: 1rem;
+
+    &--submit,
+    &--delete {
+      width: 90%;
+      height: 4rem;
+      border-radius: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    &--submit {
+      background-color: colors.$sakura-blossom;
+      color: colors.$white;
+    }
+
+    &--delete {
+      background-color: colors.$white;
+      color: colors.$sakura-bark;
+    }
   }
 }

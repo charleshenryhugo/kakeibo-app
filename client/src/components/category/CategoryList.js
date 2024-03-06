@@ -9,14 +9,22 @@ import { ExpenseType } from '../../constants/ExpenseType'
 import CategoryForm from './CategoryForm'
 
 const CategoryList = ({ onClose }) => {
-  const { categories } = useContext(CategoriesContext)
+  const {
+    categories,
+    categoryFormOpen,
+    setCategoryFormOpen,
+    updatingCategoryItem,
+    setUpdatingCategoryItem
+  } = useContext(CategoriesContext)
   const [expenseType, setExpenseType] = useState(ExpenseType.expense)
-  const [categoryFormOpen, setCategoryFormOpen] = useState(false)
-  const [updateCategoryFormOpen, setUpdateCategoryFormOpen] = useState(false)
-  const [updatingCategoryItem, setUpdatingCategoryItem] = useState(null)
+
   const onCategoryItemClick = (item) => {
     setUpdatingCategoryItem(() => item)
-    setUpdateCategoryFormOpen(true)
+    setCategoryFormOpen(true)
+  }
+  const onNewCategoryItemClick = () => {
+    setUpdatingCategoryItem(() => null)
+    setCategoryFormOpen(true)
   }
 
   return (
@@ -29,7 +37,7 @@ const CategoryList = ({ onClose }) => {
         <ExpenseTypeSelector expenseType={expenseType} setExpenseType={setExpenseType} />
         <span></span>
       </div>
-      <div className='categoryList__addNew' onClick={() => setCategoryFormOpen(true)}>
+      <div className='categoryList__addNew' onClick={onNewCategoryItemClick}>
         <span>新規カテゴリーの追加</span>
         <RightArrow width='10px' height='10px'></RightArrow>
       </div>
@@ -49,8 +57,7 @@ const CategoryList = ({ onClose }) => {
             )
           })}
       </div>
-      {updateCategoryFormOpen && <CategoryForm onClose={() => setUpdateCategoryFormOpen(false)} updatingCategoryItem={updatingCategoryItem}/>}
-      {categoryFormOpen && <CategoryForm onClose={() => setCategoryFormOpen(false)} />}
+      {categoryFormOpen && <CategoryForm onClose={() => setCategoryFormOpen(false)} updatingCategoryItem={updatingCategoryItem} expenseType={expenseType} />}
     </section>
 
   )

@@ -126,7 +126,7 @@ const UpdateExpenseForm = ({ expenseItem, onSubmit: onSubmitFunctionFromParent, 
             <textarea
               id='expenseDescription'
               name='expenseDescription'
-              rows='10'
+              rows='5'
               cols='25'
               value={enteredDescription} /* 2 way binding */
               onChange={(event) => setEnteredDescription(event.target.value)}

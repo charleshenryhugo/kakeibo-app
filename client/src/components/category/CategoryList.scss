@@ -43,7 +43,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 90%;
+    width: 95%;
     padding: 0.5rem;
     border-radius: 5px;
     background-color: colors.$white;
@@ -61,6 +61,7 @@
     align-items: center;
     border-top: 1px solid colors.$grey;
     padding: 0.5rem;
+    height: 5rem;
 
     &:first-child{
       border-top: none;
@@ -75,7 +76,7 @@
 
     &:hover {
       cursor: pointer;
-      background-color: colors.$light-grey;
+      background-color: colors.$sakura-light-pink;
     }
   }
 }

@@ -6,21 +6,23 @@ import Alert from '../UI/Alert'
 import LoadingIndicator from '../UI/LoadingIndicator'
 import Category from '../../repositories/Category'
 import { ExpenseType } from '../../constants/ExpenseType'
+import CategoryColorPicker from './CategoryColorPicker'
+import { CategoryColors, CategoryIconNames } from '../../constants/Category'
+import CategoryIconPicker from './CategoryIconPicker'
+import LeftArrow from '../Icon/LeftArrow'
 
-const CategoryForm = ({ onClose, updatingCategoryItem = null }) => {
+const CategoryForm = ({ onClose, updatingCategoryItem = null, expenseType }) => {
   const { setCategories } = useContext(CategoriesContext)
 
   const categoryItem = updatingCategoryItem
     ? new Category({ ...updatingCategoryItem })
-    : new Category({ text: '', iconName: 'cart', iconColor: '#f2f2f2', expenseType: ExpenseType.expense, order: 0 })
+    : new Category({ text: '', iconName: CategoryIconNames[0], iconColor: CategoryColors[0], expenseType, order: 0 })
 
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const [enteredText, setEnteredText] = useState(categoryItem?.text ?? '')
-  // eslint-disable-next-line no-unused-vars
   const [enteredIconName, setEnteredIconName] = useState(categoryItem.iconName)
-  // eslint-disable-next-line no-unused-vars
   const [enteredIconColor, setEnteredIconColor] = useState(categoryItem.iconColor)
 
   const onSubmit = async () => {
@@ -43,13 +45,14 @@ const CategoryForm = ({ onClose, updatingCategoryItem = null }) => {
         setShowAlert(false)
         onClose()
         setCategories(prev => {
-          const index = prev.findIndex((category) => category.id === item.id)
+          const newCategories = [...prev]
+          const index = newCategories.findIndex((category) => category.id === item.id)
           if (index >= 0) {
-            prev[index] = item
+            newCategories[index] = item
           } else {
-            prev.push(item)
+            newCategories.push(item)
           }
-          return [...prev]
+          return newCategories.sort((item1, item2) => item1.order - item2.order)
         })
       }, 1000)
     } catch (error) {
@@ -76,7 +79,11 @@ const CategoryForm = ({ onClose, updatingCategoryItem = null }) => {
       setTimeout(() => {
         setShowAlert(false)
         onClose()
-        setCategories(prev => prev.filter((category) => category.id !== categoryItem.id))
+        setCategories(prev => {
+          return prev
+            .filter((category) => category.id !== categoryItem.id)
+            .sort((item1, item2) => item1.order - item2.order)
+        })
       }, 1000)
     } catch (error) {
       setAlertMessage('削除が失敗しました。もう一度試してください。')
@@ -89,16 +96,19 @@ const CategoryForm = ({ onClose, updatingCategoryItem = null }) => {
   }
 
   return (
-    <section className='CategoryFormWrapper'>
+    <section className='categoryFormWrapper'>
       <Alert show={ showAlert } message={ alertMessage } />
       <LoadingIndicator show={loading} />
       <div className="categoryForm__header">
-        <span className="categoryForm__closeButton" onClick={onClose}>閉じる</span>
-        <span className="categoryForm__title">{updatingCategoryItem ? 'カテゴリーの編集' : '新規カテゴリーの追加'}</span>
+        <span className="categoryForm__closeButton" onClick={onClose}>
+          <LeftArrow width='15px' height='15px' /> 閉じる
+        </span>
+        <span className="categoryForm__title">{updatingCategoryItem ? 'カテゴリーを編集' : 'カテゴリーを作成'}</span>
+        <span></span>
       </div>
       <section className='categoryForm'>
         <div className='categoryForm__inputs'>
-          <div className='categoryForm__input'>
+          <div className='categoryForm__input categoryForm__inputName'>
             <label htmlFor='categoryText'>カテゴリー名</label>
             <input
               id='categoryText'
@@ -108,12 +118,18 @@ const CategoryForm = ({ onClose, updatingCategoryItem = null }) => {
               onChange={(event) => setEnteredText(event.target.value)}
             />
           </div>
-          <div>アイコン</div>
-          <div>カラー</div>
+          <div className='categoryForm__input'>
+            アイコン
+            <CategoryIconPicker iconName={enteredIconName} setIconName={setEnteredIconName} iconColor={enteredIconColor} />
+          </div>
+          <div className='categoryForm__input'>
+            カラー
+            <CategoryColorPicker color={enteredIconColor} setColor={setEnteredIconColor} />
+          </div>
         </div>
         <div className='categoryForm__actions'>
-          <span onClick={onSubmit}>保存する</span>
-          {updatingCategoryItem ? (<span onClick={onDelete}>削除する</span>) : ''}
+          <span className='categoryForm__actions--submit' onClick={onSubmit}>保存する</span>
+          {updatingCategoryItem ? (<span className='categoryForm__actions--delete' onClick={onDelete}>削除する</span>) : ''}
         </div>
       </section>
     </section>
@@ -122,7 +138,8 @@ const CategoryForm = ({ onClose, updatingCategoryItem = null }) => {
 
 CategoryForm.propTypes = {
   onClose: PropTypes.func.isRequired,
-  updatingCategoryItem: PropTypes.object
+  updatingCategoryItem: PropTypes.object,
+  expenseType: PropTypes.string.isRequired
 }
 
 export default CategoryForm

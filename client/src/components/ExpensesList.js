@@ -86,14 +86,14 @@ const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onI
           })
         }
       </div>
-      {isUpdateFormOpen
-        ? <UpdateExpenseForm
+      {isUpdateFormOpen &&
+        <UpdateExpenseForm
             expenseItem={selectedExpenseItem}
             onSubmit={(updatedExpenseItem) => { closeUpdateForm(); onUpdateFormSubmit(updatedExpenseItem) }}
             onCancel={() => closeUpdateForm()}
             onItemDelete={(deletedExpenseItem) => { closeUpdateForm(); onItemDelete(deletedExpenseItem) } }
           />
-        : ''}
+        }
     </section>
   )
 }

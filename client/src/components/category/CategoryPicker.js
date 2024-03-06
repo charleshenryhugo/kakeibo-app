@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import './CategoryPicker.scss'
 import { CategoriesContext } from '../../contexts/AppMainContext'
@@ -7,8 +7,7 @@ import CategoryList from './CategoryList'
 import { ExpenseType } from '../../constants/ExpenseType'
 
 const CategoryPicker = ({ categoryId, setCategoryId, expenseType = ExpenseType.expense }) => {
-  const { categories } = useContext(CategoriesContext)
-  const [categoryListOpen, setCategoryListOpen] = useState(false)
+  const { categories, categoryListOpen, setCategoryListOpen } = useContext(CategoriesContext)
 
   return (
     <section className='categoryPicker'>
@@ -24,7 +23,7 @@ const CategoryPicker = ({ categoryId, setCategoryId, expenseType = ExpenseType.e
       <div className='categoryPicker__item' onClick={() => setCategoryListOpen(true)}>
         <span>編集・追加 <RightArrow width="10px" height="10px"></RightArrow></span>
       </div>
-      {categoryListOpen && <CategoryList onClose={() => setCategoryListOpen(false)}/>}
+      {categoryListOpen && <CategoryList onClose={() => setCategoryListOpen(false)} />}
     </section>
   )
 }

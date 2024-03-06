@@ -4,13 +4,7 @@
   position: fixed;
   top: layouts.$app-header-height;
   bottom: layouts.$app-footer-height;
-  width: 60%;
-
-  /* stylelint-disable-next-line media-feature-range-notation */
-  @media (max-width: 800px) {
-    width: 100%;
-  }
-
+  width: 100%;
   overflow-y: auto;
   display: flex;
   flex-direction: row;

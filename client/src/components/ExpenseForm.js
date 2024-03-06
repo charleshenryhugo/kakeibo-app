@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import './ExpenseForm.scss'
 import ExpenseTypeSelector from './ExpenseTypeSelector.js'
@@ -8,14 +8,17 @@ import DateSelector from './calendar/DateSelector.js'
 import Alert from './UI/Alert.js'
 import Expense from '../repositories/Expense.js'
 import CategoryPicker from './category/CategoryPicker.js'
+import { CategoriesContext } from '../contexts/AppMainContext.js'
 
-const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCancelFunctionFromParent }) => {
+const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent }) => {
+  const { categories } = useContext(CategoriesContext)
   const today = new Date()
   const [enteredDate, setEnteredDate] = useState(`${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`)
   const [enteredTitle, setEnteredTitle] = useState('')
   const [enteredDescription, setEnteredDescription] = useState('')
   const [enteredAmount, setEnteredAmount] = useState('0')
-  const [enteredCategoryId, setEnteredCategoryId] = useState('0')
+  const [enteredCategoryId, setEnteredCategoryId] =
+    useState(`${categories.find(item => item.expenseType === ExpenseType.expense)?.id ?? '0'}`)
   const [expenseType, setExpenseType] = useState(ExpenseType.expense)
 
   const [loading, setLoading] = useState(false)
@@ -105,7 +108,7 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
 
     if (TransactionDate?.value) {
       const date = new Date(TransactionDate.value)
-      setEnteredDate(`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getDate()}`)
+      setEnteredDate(`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`)
     }
 
     const description = []
@@ -175,7 +178,7 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
             <textarea
               id='expenseDescription'
               name='expenseDescription'
-              rows='10'
+              rows='5'
               cols='25'
               value={enteredDescription} /* 2 way binding */
               onChange={(event) => setEnteredDescription(event.target.value)}
@@ -220,8 +223,7 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent, onCanceled: onCance
 }
 
 ExpenseForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onCanceled: PropTypes.func
+  onSubmit: PropTypes.func.isRequired
 }
 
 export default ExpenseForm
