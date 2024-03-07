@@ -1,4 +1,5 @@
 @use '../../styles/colors.scss';
+@use '../../styles/layouts.scss';
 
 .alertWrapper {
   position: fixed;
@@ -8,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: layouts.$modal-stack;
   background-color: rgba(242 242 242 / 40%);
 }
 

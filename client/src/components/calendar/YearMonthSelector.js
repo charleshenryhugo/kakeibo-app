@@ -17,7 +17,7 @@ const YearMonthSelector = ({ yearMonth, setYearMonth }) => {
   return (
     <section className="yearMonthSelector">
       <span className="yearMonthSelector__prev" onClick={() => setYearMonth((prev) => adjustYearMonth(prev, -1))}>
-        <LeftArrow />
+        <LeftArrow width='30px' height='30px' />
       </span>
       <input
         type='month'
@@ -28,7 +28,7 @@ const YearMonthSelector = ({ yearMonth, setYearMonth }) => {
         onChange={(event) => setYearMonth(event.target.value)}
       />
       <span className="yearMonthSelector__next" onClick={() => setYearMonth((prev) => adjustYearMonth(prev, 1))}>
-        <RightArrow />
+        <RightArrow width='30px' height='30px' />
       </span>
     </section>
   )

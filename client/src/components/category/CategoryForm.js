@@ -107,7 +107,7 @@ const CategoryForm = ({ onClose, updatingCategoryItem = null, expenseType }) => 
       </div>
       <section className='categoryForm'>
         <div className='categoryForm__inputs'>
-          <div className='categoryForm__input categoryForm__inputName'>
+          <div className='categoryForm__input categoryForm__inputText'>
             <label htmlFor='categoryText'>カテゴリー名</label>
             <input
               id='categoryText'
@@ -138,7 +138,7 @@ const CategoryForm = ({ onClose, updatingCategoryItem = null, expenseType }) => 
 CategoryForm.propTypes = {
   onClose: PropTypes.func.isRequired,
   updatingCategoryItem: PropTypes.object,
-  expenseType: PropTypes.string.isRequired
+  expenseType: PropTypes.number.isRequired
 }
 
 export default CategoryForm

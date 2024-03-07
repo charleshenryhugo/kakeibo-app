@@ -1,33 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import './CategoryIconPicker.scss'
 import { CategoryIconNames } from '../../constants/Category'
+import Icon from '../UI/Icon'
 
 const CategoryIconPicker = ({ iconName, setIconName, iconColor }) => {
-  const [icons, setIcons] = useState([])
-
-  useEffect(() => {
-    const loadIcons = () => {
-      const loadedIcons = CategoryIconNames.map((name) => {
-        // const { ReactComponent } = await import(`../../svgs/${iconName}.svg`)
-        return { name }
-      })
-      setIcons(() => loadedIcons)
-    }
-
-    loadIcons()
-  }, [])
-
   return (
     <div className='categoryIconPicker'>
-      {icons.map(({ name, IconComponent }, index) => (
+      {CategoryIconNames.map((name, index) => (
         <div
           key={index}
           className={`categoryIconPicker__item ${name === iconName ? 'selected' : ''}`}
           onClick={() => setIconName(name)}
         >
-          {/* <IconComponent fill={iconColor} /> */}
-          {name}
+          <Icon name={name} fill={iconColor} width='3rem' height='3rem' />
         </div>
       ))}
     </div>

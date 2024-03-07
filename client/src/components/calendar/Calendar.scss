@@ -11,12 +11,12 @@
   font-size: 1.6rem;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
 
   &__day {
+    cursor: pointer;
     background-color: colors.$white;
     padding: 0 2px;
-    border: 1px solid colors.$sakura-bark;
+    outline: 1px solid colors.$sakura-bark;
     display: grid;
     font-size: 1.2rem;
     grid-template-columns: 1fr 1fr 1fr; 
@@ -26,6 +26,10 @@
       "date . ."
       "Income Income Income"
       "Expense Expense Expense";
+
+    &--active {
+      background-color: colors.$sakura-light-pink;
+    }
   }
 
   &__date {

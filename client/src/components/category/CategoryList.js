@@ -7,6 +7,7 @@ import LeftArrow from '../Icon/LeftArrow'
 import ExpenseTypeSelector from '../ExpenseTypeSelector'
 import { ExpenseType } from '../../constants/ExpenseType'
 import CategoryForm from './CategoryForm'
+import Icon from '../UI/Icon'
 
 const CategoryList = ({ onClose }) => {
   const {
@@ -31,7 +32,7 @@ const CategoryList = ({ onClose }) => {
     <section className='categoryListWrapper'>
       <div className='categoryList__header'>
         <span className='categoryList__closeButton' onClick={onClose}>
-          <LeftArrow width='20px' height='20px'/>
+          <LeftArrow width='15px' height='15px'/>
           <span>閉じる</span>
         </span>
         <ExpenseTypeSelector expenseType={expenseType} setExpenseType={setExpenseType} />
@@ -51,13 +52,21 @@ const CategoryList = ({ onClose }) => {
                 className='categoryList__item'
                 onClick={() => onCategoryItemClick(item)}
               >
-                <span>{item.iconName} {item.text}</span>
+                <span className='categoryList__itemName'>
+                  <Icon name={item.iconName} fill={item.iconColor} width='1.6rem' height='1.6rem' />
+                  {item.text}
+                </span>
                 <RightArrow width='10px' height='10px'></RightArrow>
               </div>
             )
           })}
       </div>
-      {categoryFormOpen && <CategoryForm onClose={() => setCategoryFormOpen(false)} updatingCategoryItem={updatingCategoryItem} expenseType={expenseType} />}
+      {categoryFormOpen &&
+        <CategoryForm
+          onClose={() => setCategoryFormOpen(false)}
+          updatingCategoryItem={updatingCategoryItem}
+          expenseType={expenseType}
+        />}
     </section>
 
   )

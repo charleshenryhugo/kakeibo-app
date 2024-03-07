@@ -4,7 +4,7 @@ import './Calendar.scss'
 import { dayToText } from '../../constants/Date'
 import { ExpenseType } from '../../constants/ExpenseType'
 
-const Calendar = ({ yearMonth, expensesGroupedByDate }) => {
+const Calendar = ({ yearMonth, expensesGroupedByDate, clickedDay, setClickedDay }) => {
   const [year, month] = yearMonth.split('-')
   const daysInMonth = new Date(year, month, 0).getDate()
   const firstDay = new Date(year, month - 1, 1).getDay()
@@ -38,7 +38,12 @@ const Calendar = ({ yearMonth, expensesGroupedByDate }) => {
             }, 0) ?? 0
 
             return (
-              <div key={day} name={day} className='calendar__day'>
+              <div
+                key={day}
+                name={day}
+                className={`calendar__day ${(day + 1) === clickedDay ? 'calendar__day--active' : ''}`}
+                onClick={() => setClickedDay(day + 1)}
+              >
                 <span className="calendar__date">{ day + 1 }</span>
                 <span className="calendar__dailyIncome">{ dailyIncome > 0 ? dailyIncome.toLocaleString() : ''}</span>
                 <span className="calendar__dailyExpense">{ dailyExpense > 0 ? dailyExpense.toLocaleString() : ''}</span>
@@ -53,7 +58,9 @@ const Calendar = ({ yearMonth, expensesGroupedByDate }) => {
 
 Calendar.propTypes = {
   yearMonth: PropTypes.string.isRequired,
-  expensesGroupedByDate: PropTypes.object.isRequired
+  expensesGroupedByDate: PropTypes.object.isRequired,
+  clickedDay: PropTypes.number,
+  setClickedDay: PropTypes.func
 }
 
 export default Calendar

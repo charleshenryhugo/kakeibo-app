@@ -17,7 +17,7 @@ const DateSelector = ({ date, setDate, minDate = '2000-01-01', maxDate = '2099-1
   return (
     <section className={`dateSelector ${props.className}`}>
       <span className="dateSelector__prev" onClick={() => setDate((prev) => adjustDate(prev, -1))}>
-        <LeftArrow />
+        <LeftArrow width='30px' height='30px' />
       </span>
       <input
         id={props.id}
@@ -29,7 +29,7 @@ const DateSelector = ({ date, setDate, minDate = '2000-01-01', maxDate = '2099-1
         onChange={(event) => setDate(event.target.value)}
       />
       <span className="dateSelector__next" onClick={() => setDate((prev) => adjustDate(prev, 1))}>
-        <RightArrow />
+        <RightArrow width='30px' height='30px' />
       </span>
     </section>
   )

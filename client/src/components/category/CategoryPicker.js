@@ -5,6 +5,7 @@ import { CategoriesContext } from '../../contexts/AppMainContext'
 import RightArrow from '../Icon/RightArrow'
 import CategoryList from './CategoryList'
 import { ExpenseType } from '../../constants/ExpenseType'
+import Icon from '../UI/Icon'
 
 const CategoryPicker = ({ categoryId, setCategoryId, expenseType = ExpenseType.expense }) => {
   const { categories, categoryListOpen, setCategoryListOpen } = useContext(CategoriesContext)
@@ -17,6 +18,7 @@ const CategoryPicker = ({ categoryId, setCategoryId, expenseType = ExpenseType.e
           className={`categoryPicker__item ${category.id === categoryId ? 'selected' : ''}`}
           onClick={() => setCategoryId(category.id)}
         >
+          <Icon name={category.iconName} fill={category.iconColor} width='2rem' height='2rem'/>
           {category.text}
         </div>
       ))}

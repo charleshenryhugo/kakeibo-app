@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import './ExpensesList.scss'
 import { ExpenseType } from '../constants/ExpenseType'
@@ -7,8 +7,9 @@ import { dayToText } from '../constants/Date'
 import UpdateExpenseForm from './UpdateExpenseForm'
 import RightArrow from './Icon/RightArrow'
 import { CategoriesContext } from '../contexts/AppMainContext'
+import Icon from './UI/Icon'
 
-const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onItemDelete }) => {
+const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onItemDelete, calendarClickedDay = null }) => {
   const { categories } = useContext(CategoriesContext)
   const categoryMap = categories.reduce((acc, cur) => {
     acc[cur.id] = cur
@@ -36,9 +37,20 @@ const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onI
     setSelectExpenseItem(null)
   }
 
+  const getExpenseGroupId = (date) => `expensesGroup${Number(date.split('-')[2])}`
+  useEffect(() => {
+    if (calendarClickedDay === null) {
+      return
+    }
+    const target = document.getElementById(`expensesGroup${calendarClickedDay}`)
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [calendarClickedDay])
+
   return (
     <section className="expensesListWrapper">
-      <div className='expensesList'>
+      <div id='expensesList' className='expensesList'>
         <div className='expensesList__monthlyTotal'>
           <div className='expensesList__monthlyTotalItem'>
             <span className='expensesList__monthlyTotalItemTitle'>収入</span>
@@ -58,7 +70,7 @@ const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onI
         {
           Object.keys(expensesGroupedByDate).sort((date1, date2) => date2.localeCompare(date1)).map((date, index) => {
             return (
-              <div key={index} id={`${date}`}>
+              <div key={index} id={getExpenseGroupId(date)}>
                 <div className='expensesList__dailyTotal'>
                   <div className='expensesList__dailyTotalAmount'>{ `${dayjs(date).format('YYYY年MM月DD日')}(${dayToText[dayjs(date).day()]})` }</div>
                   <div className='expensesList__dailyTotalAmount'>{
@@ -70,9 +82,14 @@ const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onI
                 </div>
                 {
                   expensesGroupedByDate[date].map((expense, index) => {
+                    const category = categoryMap[expense.categoryId]
                     return (
                       <div key={index} className='expensesList__expenseItem' onClick={() => onExpenseItemClick(expense)}>
-                        <div>{categoryMap[expense.categoryId]?.text ?? ''} ({expense.title})</div>
+                        <div>
+                          { category && <Icon name={category.iconName} fill={category.iconColor} /> }
+                          {category?.text ?? ''}
+                          ({expense.title})
+                        </div>
                         <div className={`expensesList__expenseAmount ${expense.type === ExpenseType.income ? 'income' : ''}`}>
                           <span>{Number(expense.amount).toLocaleString()}円</span>
                           <RightArrow width='12px' height='12px' />
@@ -102,7 +119,8 @@ ExpensesList.propTypes = {
   expenses: PropTypes.array.isRequired,
   expensesGroupedByDate: PropTypes.object.isRequired,
   onUpdateFormSubmit: PropTypes.func.isRequired,
-  onItemDelete: PropTypes.func.isRequired
+  onItemDelete: PropTypes.func.isRequired,
+  calendarClickedDay: PropTypes.number
 }
 
 export default ExpensesList

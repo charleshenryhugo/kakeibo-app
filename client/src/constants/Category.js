@@ -18,21 +18,41 @@ export const CategoryColors = [
   '#7D3C98', // Plum
   '#C0392B', // Pomegranate
   '#7F8C8D', // Asbestos
-  '#BDC3C7' // Silver
+  '#BDC3C7', // Silver
+  '#FF5733', // Cinnabar
+  '#FFC300', // Sunglow
+  '#DAF7A6', // Tea Green
+  '#900C3F', // Antique Ruby
+  '#581845', // Plum
+  '#C70039', // Red
+  '#FF5733', // Persimmon
+  '#FFBD69', // Mellow Apricot
+  '#FF6363', // Light Coral
+  '#BC6C25', // Windsor Tan
+  '#2EC4B6', // Tiffany Blue
+  '#011627', // Oxford Blue
+  '#E71D36', // Desire
+  '#2B2D42', // Charleston Green
+  '#8D99AE', // Manatee
+  '#EDF2F4', // Baby Powder
+  '#EF233C', // Lust
+  '#D90429', // Rosso Corsa
+  '#3F88C5', // Tufts Blue
+  '#25283D' // Dark Purple
 ]
 
 export const CategoryIconNames = [
-  'icon1',
-  'icon2',
-  'icon3',
-  'icon4',
-  'icon5',
-  'icon6',
-  'icon7',
-  'icon8',
-  'icon9',
-  'icon10',
-  'icon11',
-  'icon12',
-  'icon13'
+  'icon-wallet',
+  'icon-banknote',
+  'icon-book',
+  'icon-library',
+  'icon-coin-yen',
+  'icon-spoon-knife',
+  'icon-rocket',
+  'icon-hammer2',
+  'icon-fire',
+  'icon-shield',
+  'icon-earth',
+  'icon-flag',
+  'icon-npm'
 ]

@@ -5,6 +5,7 @@
 
   &Wrapper {
     width: 100%;
+    overflow: auto;
   }
 
   &__monthlyTotal {
@@ -47,7 +48,7 @@
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid colors.$grey;
-    padding: 0.5rem;
+    padding: 1rem 0.5rem;
 
     &:hover {
       cursor: pointer;
