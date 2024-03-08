@@ -1,9 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useContext } from 'react'
 import './AppFooter.scss'
-import { AppViewType, AppViewTypeToText } from '../constants/AppViewType.js'
+import { AppViewType, AppViewTypeToText } from '../constants/AppViewType'
+import { AppMainContext } from '../contexts/AppMainContext'
 
-const AppFooter = ({ appViewType, setAppViewType }) => {
+const AppFooter = () => {
+  const { appViewType, setAppViewType } = useContext(AppMainContext)
   return (
     <section className='appFooterWrapper'>
       <div className='appFooter'>
@@ -19,11 +20,6 @@ const AppFooter = ({ appViewType, setAppViewType }) => {
       </div>
     </section>
   )
-}
-
-AppFooter.propTypes = {
-  appViewType: PropTypes.number.isRequired,
-  setAppViewType: PropTypes.func.isRequired
 }
 
 export default AppFooter

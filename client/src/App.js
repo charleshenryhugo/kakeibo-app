@@ -3,16 +3,19 @@ import React, { useState } from 'react'
 import './App.scss'
 
 import AppFooter from './components/AppFooter'
-import AppMain from './components/AppMain.js'
-import { AppViewType } from './constants/AppViewType.js'
+import AppMain from './components/AppMain'
+import { AppViewType } from './constants/AppViewType'
+import { AppMainContext } from './contexts/AppMainContext'
 
 function App () {
   const [appViewType, setAppViewType] = useState(AppViewType.expenseForm)
 
   return (
     <section className="app">
-      <AppMain appViewType={appViewType} />
-      <AppFooter appViewType={appViewType} setAppViewType={setAppViewType} />
+      <AppMainContext.Provider value={{ appViewType, setAppViewType }}>
+        <AppMain />
+        <AppFooter />
+      </AppMainContext.Provider>
     </section>
   )
 }

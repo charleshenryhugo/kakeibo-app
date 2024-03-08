@@ -3,16 +3,16 @@ class Expense {
    * Creates a new expense.
    *
    * @param {Object} expense - The expense object.
-   * @param {Date} expense.inputDate - The date the expense was input.
-   * @param {Date} expense.lastUpdated - The date the expense was last updated.
+   * @param {string} expense.inputDate - The date the expense was input.
+   * @param {string} expense.lastUpdated - The date the expense was last updated.
    * @param {number} expense.year - The year of the expense.
    * @param {number} expense.month - The month of the expense.
    * @param {number} expense.day - The day of the expense.
    * @param {string} expense.title - The title of the expense.
    * @param {string} expense.description - A description of the expense.
    * @param {number} expense.amount - The amount of the expense.
-   * @param {number} expense.categoryId - The ID of the category the expense belongs to.
-   * @param {string} expense.type - The type of the expense.
+   * @param {string} expense.categoryId - The ID of the category the expense belongs to.
+   * @param {number} expense.type - The type of the expense.
    * @param {number} [expense.id=null] - The ID of the expense.
    */
   constructor ({ inputDate, lastUpdated, year, month, day, title, description, amount, categoryId, type, id = null }) {

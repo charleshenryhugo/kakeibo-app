@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useContext, useEffect, useState } from 'react'
 import './AppMain.scss'
 import { AppViewType } from '../constants/AppViewType'
 import ExpenseForm from './ExpenseForm'
@@ -7,29 +6,20 @@ import CalendarView from './CalendarView'
 import ReportView from './ReportView'
 import MenuView from './MenuView'
 import { CategoriesContext } from '../contexts/CategoryContext'
+import { AppMainContext } from '../contexts/AppMainContext'
+import { ExpenseContext } from '../contexts/ExpenseContext'
 import CategoryList from './category/CategoryList'
 
-// eslint-disable-next-line react/prop-types
-const CurrentAppView = ({ appViewType }) => {
-  if (appViewType === AppViewType.expenseForm) {
-    return <ExpenseForm onSubmit={() => {}} />
-  }
-  if (appViewType === AppViewType.calendarView) {
-    return <CalendarView />
-  }
-  if (appViewType === AppViewType.menuView) {
-    return <MenuView />
-  }
-  if (appViewType === AppViewType.reportView) {
-    return <ReportView />
-  }
-}
+const AppMain = () => {
+  const [expensesGroupedByYearMonth, setExpensesGroupedByYearMonth] = useState({})
+  const [updatingExpenseItem, setUpdatingExpenseItem] = useState(null)
 
-const AppMain = ({ appViewType }) => {
   const [categories, setCategories] = useState([])
   const [categoryListOpen, setCategoryListOpen] = useState(false)
   const [categoryFormOpen, setCategoryFormOpen] = useState(false)
   const [updatingCategoryItem, setUpdatingCategoryItem] = useState(null)
+
+  const { appViewType } = useContext(AppMainContext)
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -45,27 +35,36 @@ const AppMain = ({ appViewType }) => {
   // Note: Every time categories context is updated, all components that consume the context will re-render.
   return (
     <section className='appMain'>
-      <CategoriesContext.Provider
-        value={{
-          categories,
-          setCategories,
-          categoryListOpen,
-          setCategoryListOpen,
-          categoryFormOpen,
-          setCategoryFormOpen,
-          updatingCategoryItem,
-          setUpdatingCategoryItem
-        }}
-      >
-        <CurrentAppView appViewType={appViewType} />
-        {categoryListOpen && <CategoryList onClose={() => setCategoryListOpen(false)} />}
-      </CategoriesContext.Provider>
+      <ExpenseContext.Provider value={{
+        expensesGroupedByYearMonth,
+        setExpensesGroupedByYearMonth,
+        updatingExpenseItem,
+        setUpdatingExpenseItem
+      }}>
+        <CategoriesContext.Provider
+          value={{
+            categories,
+            setCategories,
+            categoryListOpen,
+            setCategoryListOpen,
+            categoryFormOpen,
+            setCategoryFormOpen,
+            updatingCategoryItem,
+            setUpdatingCategoryItem
+          }}
+        >
+          { appViewType === AppViewType.expenseForm && <ExpenseForm /> }
+          { appViewType === AppViewType.calendarView && <CalendarView /> }
+          { appViewType === AppViewType.menuView && <MenuView /> }
+          { appViewType === AppViewType.reportView && <ReportView /> }
+
+          { categoryListOpen && <CategoryList onClose={() => setCategoryListOpen(false)} /> }
+
+        </CategoriesContext.Provider>
+      </ExpenseContext.Provider>
+
     </section>
   )
-}
-
-AppMain.propTypes = {
-  appViewType: PropTypes.number.isRequired
 }
 
 export default AppMain

@@ -4,10 +4,10 @@ import './ExpensesList.scss'
 import { ExpenseType } from '../constants/ExpenseType'
 import dayjs from 'dayjs'
 import { dayToText } from '../constants/Date'
-import UpdateExpenseForm from './UpdateExpenseForm'
 import RightArrow from './Icon/RightArrow'
 import { CategoriesContext } from '../contexts/CategoryContext'
 import Icon from './UI/Icon'
+import UpdateExpenseForm from './UpdateExpenseForm'
 
 const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onItemDelete, calendarClickedDay = null }) => {
   const { categories } = useContext(CategoriesContext)
@@ -104,13 +104,13 @@ const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onI
         }
       </div>
       {isUpdateFormOpen &&
-        <UpdateExpenseForm
-            expenseItem={selectedExpenseItem}
+          <UpdateExpenseForm
+            updatingExpenseItem={selectedExpenseItem}
             onSubmit={(updatedExpenseItem) => { closeUpdateForm(); onUpdateFormSubmit(updatedExpenseItem) }}
             onCancel={() => closeUpdateForm()}
             onItemDelete={(deletedExpenseItem) => { closeUpdateForm(); onItemDelete(deletedExpenseItem) } }
           />
-        }
+      }
     </section>
   )
 }

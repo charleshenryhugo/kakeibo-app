@@ -9,36 +9,6 @@
   align-items: center;
   width: 100%;
 
-  &__actions {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-  }
-
-  &__submitButton {
-    display: block;
-    width: 95%;
-    height: 40px;
-    font-size: 2rem;
-    background-color: colors.$sakura-blossom;
-    color: colors.$white;
-    border-radius: 20px;
-    border-style: none;
-
-    &:disabled {
-      background-color: colors.$light-grey;
-      color: colors.$white;
-      cursor: not-allowed;
-    }
-  }
-
-  &__dateSelector {
-    width: 70%;
-  }
-
   &Wrapper {
     display: flex;
     flex-direction: column;
@@ -46,6 +16,50 @@
     align-items: center;
     width: 100%;
     z-index: layouts.$expense-form-stack;
+  }
+
+  &__actions {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+
+    &--submit,
+    &--delete {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 95%;
+      height: 4rem;
+      font-size: 2rem;
+      border-radius: 2rem;
+      border-style: none;
+      cursor: pointer;
+    }
+
+    &--submit {
+      background-color: colors.$sakura-blossom;
+      color: colors.$white;
+
+      &:disabled {
+        background-color: colors.$light-grey;
+        color: colors.$white;
+        cursor: not-allowed;
+      }
+    }
+
+    &--delete {
+      background-color: colors.$white;
+      color: colors.$sakura-bark;
+      border: 1px solid colors.$sakura-bark;
+    }
+  }
+
+  &__dateSelector {
+    width: 70%;
   }
 
   &__inputs {

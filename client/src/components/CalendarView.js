@@ -1,32 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './CalendarView.scss'
 import ExpensesList from './ExpensesList'
 import YearMonthSelector from './calendar/YearMonthSelector'
 import Calendar from './calendar/Calendar'
 import StickyTop from './UI/Sticky'
 import dayjs from 'dayjs'
+import { ExpenseContext } from '../contexts/ExpenseContext'
 
 const CalendarView = () => {
   const today = new Date()
-  const [yearMonth, setYearMonth] = useState(`${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`)
+  const [yearMonth, setYearMonth] = useState(dayjs().format('YYYY-MM'))
   const [expenses, setExpenses] = useState([])
-  const [expensesGroupedByDate, setExpensesGroupedByDate] = useState({})
   const [calendarClickedDay, setCalendarClickedDay] = useState(today.getDate()) // controls expense list scroll
 
-  const updateExpenses = (newExpenses) => {
-    setExpenses(() => newExpenses)
+  const { expensesGroupedByYearMonth, setExpensesGroupedByYearMonth } = useContext(ExpenseContext)
 
-    setExpensesGroupedByDate(() => {
-      return newExpenses.reduce((acc, cur) => {
-        const date = cur.inputDate
-        if (acc[date]) {
-          acc[date].push(cur)
-        } else {
-          acc[date] = [cur]
-        }
-        return acc
-      }, {})
-    })
+  const updateExpensesContext = (monthlyExpenses) => {
+    setExpenses(() => monthlyExpenses)
+
+    const groupedByDate = monthlyExpenses.reduce((acc, cur) => {
+      const date = cur.inputDate
+      if (acc[date]) {
+        acc[date].push(cur)
+      } else {
+        acc[date] = [cur]
+      }
+      return acc
+    }, {})
+
+    const month = monthlyExpenses[0]?.inputDate.slice(0, 7)
+    if (month) {
+      setExpensesGroupedByYearMonth((prev) => {
+        return { ...prev, [month]: groupedByDate }
+      })
+    }
   }
 
   useEffect(() => {
@@ -40,9 +47,9 @@ const CalendarView = () => {
         body: JSON.stringify({ year, month })
       })
 
-      const { result } = await response.json()
+      const { result: monthlyExpenses } = await response.json()
 
-      updateExpenses(result)
+      updateExpensesContext(monthlyExpenses)
     }
 
     if (yearMonth === dayjs().format('YYYY-MM')) {
@@ -50,7 +57,12 @@ const CalendarView = () => {
     } else {
       setCalendarClickedDay(-1)
     }
-    fetchExpenses()
+
+    if (!expensesGroupedByYearMonth[yearMonth]) {
+      fetchExpenses()
+    }
+    // this effect should only run when yearMonth changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [yearMonth])
 
   const onUpdateFormSubmit = (updatedExpenseItem) => {
@@ -58,7 +70,7 @@ const CalendarView = () => {
       return expense.id === updatedExpenseItem.id ? { ...updatedExpenseItem } : expense
     })
 
-    updateExpenses(newExpenses)
+    updateExpensesContext(newExpenses)
   }
 
   const onExpenseItemDeleted = (deletedExpenseItem) => {
@@ -66,7 +78,7 @@ const CalendarView = () => {
       return expense.id !== deletedExpenseItem.id
     })
 
-    updateExpenses(newExpenses)
+    updateExpensesContext(newExpenses)
   }
 
   return (
@@ -75,14 +87,14 @@ const CalendarView = () => {
         <YearMonthSelector yearMonth={yearMonth} setYearMonth={setYearMonth} />
         <Calendar
           yearMonth={yearMonth}
-          expensesGroupedByDate={expensesGroupedByDate}
+          expensesGroupedByDate={expensesGroupedByYearMonth[yearMonth] ?? {}}
           clickedDay={calendarClickedDay}
           setClickedDay={setCalendarClickedDay}
         />
       </StickyTop>
       <ExpensesList
         expenses={expenses}
-        expensesGroupedByDate={expensesGroupedByDate}
+        expensesGroupedByDate={expensesGroupedByYearMonth[yearMonth] ?? {}}
         onUpdateFormSubmit={onUpdateFormSubmit}
         onItemDelete={onExpenseItemDeleted}
         calendarClickedDay={calendarClickedDay}

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import './ExpenseForm.scss'
 import ExpenseTypeSelector from './ExpenseTypeSelector.js'
@@ -8,16 +8,14 @@ import DateSelector from './calendar/DateSelector.js'
 import Alert from './UI/Alert.js'
 import Expense from '../repositories/Expense.js'
 import CategoryPicker from './category/CategoryPicker.js'
-import { CategoriesContext } from '../contexts/CategoryContext.js'
 import dayjs from 'dayjs'
 
 const ExpenseForm = ({
   updatingExpenseItem = null,
-  onSubmit: onSubmitFunctionFromParent,
-  onCancel: onCancelFunctionFromParent = () => undefined,
+  onSubmit: onSubmitFunctionFromParent = () => undefined,
   onItemDelete: onItemDeleteFunctionFromParent = () => undefined
 }) => {
-  const { categories } = useContext(CategoriesContext)
+  const defaultExpenseType = ExpenseType.expense
 
   const today = dayjs()
   const expenseItem = updatingExpenseItem
@@ -31,16 +29,16 @@ const ExpenseForm = ({
       title: '',
       description: '',
       amount: 0,
-      categoryId: categories.find(item => item.expenseType === ExpenseType.expense)?.id ?? '0',
-      type: ExpenseType.expense
+      categoryId: '0',
+      type: defaultExpenseType
     })
 
-  const [enteredDate, setEnteredDate] = useState(expenseItem.inputDate)
+  const [enteredDate, setEnteredDate] = useState(expenseItem.lastUpdated)
   const [enteredTitle, setEnteredTitle] = useState(expenseItem.title)
   const [enteredDescription, setEnteredDescription] = useState(expenseItem.description)
   const [enteredAmount, setEnteredAmount] = useState(expenseItem.amount)
   const [enteredCategoryId, setEnteredCategoryId] = useState(expenseItem.categoryId)
-  const [expenseType, setExpenseType] = useState(expenseItem.type)
+  const [expenseType, setExpenseType] = useState(defaultExpenseType)
 
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
@@ -50,22 +48,20 @@ const ExpenseForm = ({
     event.preventDefault()
     setLoading(true)
 
-    const [year, month, day] = enteredDate.split('-').map((str) => Number(str))
-    const newExpenseItem = new Expense({
-      inputDate: enteredDate,
-      lastUpdated: enteredDate,
-      year,
-      month,
-      day,
-      title: enteredTitle,
-      description: enteredDescription,
-      amount: Number(enteredAmount),
-      categoryId: enteredCategoryId,
-      type: expenseType
-    })
-
     try {
-      const data = await newExpenseItem.commit()
+      const [year, month, day] = enteredDate.split('-').map((str) => Number(str))
+      expenseItem.inputDate = enteredDate
+      expenseItem.lastUpdated = enteredDate
+      expenseItem.year = year
+      expenseItem.month = month
+      expenseItem.day = day
+      expenseItem.title = enteredTitle
+      expenseItem.description = enteredDescription
+      expenseItem.amount = Number(enteredAmount)
+      expenseItem.categoryId = enteredCategoryId
+      expenseItem.type = expenseType
+
+      const data = await expenseItem.commit()
 
       if (Number(data.statusCode) === 201) {
         setAlertMessage('入力が成功しました。')
@@ -77,6 +73,7 @@ const ExpenseForm = ({
       setShowAlert(true)
       setTimeout(() => {
         setShowAlert(false)
+        onSubmitFunctionFromParent({ ...expenseItem })
       }, 1000)
     } catch (error) {
       setAlertMessage('入力が失敗しました。もう一度試してください。')
@@ -89,9 +86,39 @@ const ExpenseForm = ({
     setEnteredTitle('')
     setEnteredDescription('')
     setEnteredAmount('0')
-    setEnteredCategoryId('0')
+    setEnteredCategoryId(0)
 
-    onSubmitFunctionFromParent(newExpenseItem)
+    setLoading(false)
+  }
+
+  const deleteExpenseItem = async () => {
+    setLoading(true)
+
+    if (!updatingExpenseItem) {
+      return
+    }
+
+    try {
+      const data = await new Expense({ ...updatingExpenseItem }).delete()
+
+      if (Number(data.statusCode) === 204) {
+        setAlertMessage('削除が成功しました。')
+      } else {
+        setAlertMessage('削除が失敗しました。もう一度試してください。')
+      }
+
+      setShowAlert(true)
+      setTimeout(() => {
+        setShowAlert(false)
+        onItemDeleteFunctionFromParent(updatingExpenseItem)
+      }, 1000)
+    } catch (error) {
+      setAlertMessage('削除が失敗しました。もう一度試してください。')
+      setShowAlert(true)
+      setTimeout(() => {
+        setShowAlert(false)
+      }, 2000)
+    }
 
     setLoading(false)
   }
@@ -199,8 +226,7 @@ const ExpenseForm = ({
             <textarea
               id='expenseDescription'
               name='expenseDescription'
-              rows='5'
-              cols='25'
+              rows='3'
               value={enteredDescription} /* 2 way binding */
               onChange={(event) => setEnteredDescription(event.target.value)}
             />
@@ -219,24 +245,36 @@ const ExpenseForm = ({
           </div>
         </div>
 
-        <CategoryPicker categoryId={enteredCategoryId} setCategoryId={setEnteredCategoryId} expenseType={expenseType}/>
+        <CategoryPicker categoryId={enteredCategoryId} setCategoryId={setEnteredCategoryId} expenseType={expenseType} />
 
         <div className='expenseForm__actions'>
-          <button className='expenseForm__submitButton' disabled={!enteredTitle || isNaN(enteredAmount) || !enteredDate || !enteredCategoryId} type='submit'>
-            支出を入力する
+          <button className='expenseForm__actions--submit' disabled={!enteredTitle || isNaN(enteredAmount) || !enteredDate || !enteredCategoryId} type='submit'>
+            { updatingExpenseItem ? '支出を上書きする' : '支出を入力する' }
           </button>
 
-          <label htmlFor="receiptUpload">レシートをスキャンする</label>
-          <input
-            id="receiptUpload"
-            type="file"
-            name="receiptUpload"
-            accept="image/*"
-            onChange={onImageUpload}
-          />
-          <div>
-            <img id="receiptImage" src={receiptImage.src} alt={receiptImage.alt} height='200'></img>
-          </div>
+          {updatingExpenseItem &&
+            <span className='expenseForm__actions--delete' onClick={deleteExpenseItem}>
+              削除
+            </span>
+          }
+
+          {
+            !updatingExpenseItem && (
+              <>
+                <label htmlFor="receiptUpload">レシートをスキャンする</label>
+                <input
+                  id="receiptUpload"
+                  type="file"
+                  name="receiptUpload"
+                  accept="image/*"
+                  onChange={onImageUpload}
+                />
+                <div>
+                  <img id="receiptImage" src={receiptImage.src} alt={receiptImage.alt} height='200'></img>
+                </div>
+              </>
+            )
+          }
         </div>
       </form>
     </section>
@@ -245,8 +283,7 @@ const ExpenseForm = ({
 
 ExpenseForm.propTypes = {
   updatingExpenseItem: PropTypes.object,
-  onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func,
+  onSubmit: PropTypes.func,
   onItemDelete: PropTypes.func
 }
 
