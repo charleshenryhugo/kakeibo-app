@@ -9,17 +9,38 @@ import Alert from './UI/Alert.js'
 import Expense from '../repositories/Expense.js'
 import CategoryPicker from './category/CategoryPicker.js'
 import { CategoriesContext } from '../contexts/CategoryContext.js'
+import dayjs from 'dayjs'
 
-const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent }) => {
+const ExpenseForm = ({
+  updatingExpenseItem = null,
+  onSubmit: onSubmitFunctionFromParent,
+  onCancel: onCancelFunctionFromParent = () => undefined,
+  onItemDelete: onItemDeleteFunctionFromParent = () => undefined
+}) => {
   const { categories } = useContext(CategoriesContext)
-  const today = new Date()
-  const [enteredDate, setEnteredDate] = useState(`${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`)
-  const [enteredTitle, setEnteredTitle] = useState('')
-  const [enteredDescription, setEnteredDescription] = useState('')
-  const [enteredAmount, setEnteredAmount] = useState('0')
-  const [enteredCategoryId, setEnteredCategoryId] =
-    useState(`${categories.find(item => item.expenseType === ExpenseType.expense)?.id ?? '0'}`)
-  const [expenseType, setExpenseType] = useState(ExpenseType.expense)
+
+  const today = dayjs()
+  const expenseItem = updatingExpenseItem
+    ? new Expense({ ...updatingExpenseItem })
+    : new Expense({
+      inputDate: today.format('YYYY-MM-DD'),
+      lastUpdated: today.format('YYYY-MM-DD'),
+      year: today.year(),
+      month: today.month() + 1,
+      day: today.date(),
+      title: '',
+      description: '',
+      amount: 0,
+      categoryId: categories.find(item => item.expenseType === ExpenseType.expense)?.id ?? '0',
+      type: ExpenseType.expense
+    })
+
+  const [enteredDate, setEnteredDate] = useState(expenseItem.inputDate)
+  const [enteredTitle, setEnteredTitle] = useState(expenseItem.title)
+  const [enteredDescription, setEnteredDescription] = useState(expenseItem.description)
+  const [enteredAmount, setEnteredAmount] = useState(expenseItem.amount)
+  const [enteredCategoryId, setEnteredCategoryId] = useState(expenseItem.categoryId)
+  const [expenseType, setExpenseType] = useState(expenseItem.type)
 
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
@@ -223,7 +244,10 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent }) => {
 }
 
 ExpenseForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  updatingExpenseItem: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func,
+  onItemDelete: PropTypes.func
 }
 
 export default ExpenseForm

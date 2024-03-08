@@ -2,8 +2,9 @@
 
 .appMain {
   position: fixed;
-  top: layouts.$app-header-height;
+  top: 0;
   bottom: layouts.$app-footer-height;
+  z-index: layouts.$app-main-stack;
   width: 100%;
   overflow-y: auto;
   display: flex;
