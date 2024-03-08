@@ -5,12 +5,12 @@ import { AppViewType, AppViewTypeToText } from '../constants/AppViewType.js'
 
 const AppFooter = ({ appViewType, setAppViewType }) => {
   return (
-    <section className='AppFooterWrapper'>
-      <div className='AppFooter'>
+    <section className='appFooterWrapper'>
+      <div className='appFooter'>
         {Object.values(AppViewType).map((viewType, index) => (
           <span
             key={index}
-            className={`AppFooter__button ${appViewType === viewType ? 'active' : ''}`}
+            className={`appFooter__button ${appViewType === viewType ? 'active' : ''}`}
             onClick={() => setAppViewType(viewType)}
           >
             {AppViewTypeToText[viewType]}

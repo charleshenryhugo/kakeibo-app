@@ -6,7 +6,8 @@ import ExpenseForm from './ExpenseForm'
 import CalendarView from './CalendarView'
 import ReportView from './ReportView'
 import MenuView from './MenuView'
-import { CategoriesContext } from '../contexts/AppMainContext'
+import { CategoriesContext } from '../contexts/CategoryContext'
+import CategoryList from './category/CategoryList'
 
 // eslint-disable-next-line react/prop-types
 const CurrentAppView = ({ appViewType }) => {
@@ -57,6 +58,7 @@ const AppMain = ({ appViewType }) => {
         }}
       >
         <CurrentAppView appViewType={appViewType} />
+        {categoryListOpen && <CategoryList onClose={() => setCategoryListOpen(false)} />}
       </CategoriesContext.Provider>
     </section>
   )

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import { CategoriesContext } from '../../contexts/AppMainContext'
+import { CategoriesContext } from '../../contexts/CategoryContext'
 import './CategoryList.scss'
 import RightArrow from '../Icon/RightArrow'
 import LeftArrow from '../Icon/LeftArrow'

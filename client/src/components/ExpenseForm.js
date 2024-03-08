@@ -8,7 +8,7 @@ import DateSelector from './calendar/DateSelector.js'
 import Alert from './UI/Alert.js'
 import Expense from '../repositories/Expense.js'
 import CategoryPicker from './category/CategoryPicker.js'
-import { CategoriesContext } from '../contexts/AppMainContext.js'
+import { CategoriesContext } from '../contexts/CategoryContext.js'
 
 const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent }) => {
   const { categories } = useContext(CategoriesContext)
@@ -191,10 +191,10 @@ const ExpenseForm = ({ onSubmit: onSubmitFunctionFromParent }) => {
               id='expenseAmount'
               type='number'
               min='0'
-              step='1'
               value={enteredAmount} /* 2 way binding */
               onChange={(event) => setEnteredAmount(event.target.value)}
             />
+            <span className='expenseForm__inputUnit'>円</span>
           </div>
         </div>
 

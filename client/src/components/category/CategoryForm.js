@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import './CategoryForm.scss'
-import { CategoriesContext } from '../../contexts/AppMainContext'
+import { CategoriesContext } from '../../contexts/CategoryContext'
 import Alert from '../UI/Alert'
 import LoadingIndicator from '../UI/LoadingIndicator'
 import Category from '../../repositories/Category'

@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import { dayToText } from '../constants/Date'
 import UpdateExpenseForm from './UpdateExpenseForm'
 import RightArrow from './Icon/RightArrow'
-import { CategoriesContext } from '../contexts/AppMainContext'
+import { CategoriesContext } from '../contexts/CategoryContext'
 import Icon from './UI/Icon'
 
 const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onItemDelete, calendarClickedDay = null }) => {

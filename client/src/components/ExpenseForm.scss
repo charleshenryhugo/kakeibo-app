@@ -65,11 +65,22 @@
     align-items: center;
     border-bottom: 0.5px solid colors.$grey;
 
+    &Unit {
+      position: absolute;
+      right: 1.6rem;
+    }
+
+    > input {
+      height: 4rem;
+    }
+
     > input,
     > textarea {
       width: 70%;
-      font-size: 1.6rem;
-      padding: 0.3rem;
+      font-size: 2rem;
+      padding: 1rem;
+      border-width: 1px;
+      border-radius: 5px;
     }
   }
 }

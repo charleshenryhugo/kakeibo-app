@@ -1,7 +1,7 @@
 @use '../styles/colors.scss';
 @use '../styles/layouts.scss';
 
-.AppHeader {
+.appHeader {
   background-color: colors.$light-grey;
   border-bottom: 1px solid colors.$sakura-bark;
   display: flex;

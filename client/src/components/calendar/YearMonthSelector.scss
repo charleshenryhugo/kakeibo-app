@@ -11,10 +11,12 @@
   &__input {
     width: 30rem;
     height: 4rem;
+    padding: 1rem;
     font-size: 2rem;
     background-color: colors.$sakura-light-pink;
     border-radius: 5px;
     border-width: 1px;
+    cursor: pointer;
   }
   
   &__prev,
