@@ -12,7 +12,7 @@ import CategoryList from './category/CategoryList'
 
 const AppMain = () => {
   const [expensesGroupedByYearMonth, setExpensesGroupedByYearMonth] = useState({})
-  const [updatingExpenseItem, setUpdatingExpenseItem] = useState(null)
+  const [monthlyExpenses, setMonthlyExpenses] = useState([])
 
   const [categories, setCategories] = useState([])
   const [categoryListOpen, setCategoryListOpen] = useState(false)
@@ -32,14 +32,26 @@ const AppMain = () => {
     fetchCategories()
   }, [])
 
-  // Note: Every time categories context is updated, all components that consume the context will re-render.
+  const onNewExpenseSubmit = (expenseItem) => {
+    setExpensesGroupedByYearMonth((prev) => {
+      const yearMonth = `${expenseItem.year}-${expenseItem.month.toString().padStart(2, '0')}`
+      if (prev[yearMonth]) {
+        prev[yearMonth][expenseItem.inputDate] = prev[yearMonth][expenseItem.inputDate] ? [...prev[yearMonth][expenseItem.inputDate], expenseItem] : [expenseItem]
+      } else {
+        prev[yearMonth] = { [expenseItem.inputDate]: [expenseItem] }
+      }
+      return { ...prev }
+    })
+  }
+
+  /* Note: Every time categories context is updated, all components that consume the context will re-render. */
   return (
     <section className='appMain'>
       <ExpenseContext.Provider value={{
         expensesGroupedByYearMonth,
         setExpensesGroupedByYearMonth,
-        updatingExpenseItem,
-        setUpdatingExpenseItem
+        monthlyExpenses,
+        setMonthlyExpenses
       }}>
         <CategoriesContext.Provider
           value={{
@@ -53,7 +65,8 @@ const AppMain = () => {
             setUpdatingCategoryItem
           }}
         >
-          { appViewType === AppViewType.expenseForm && <ExpenseForm /> }
+          {/* note: when appViewType changes, the components will un-mount/re-mount and lose state */}
+          { appViewType === AppViewType.expenseForm && <ExpenseForm onSubmit={onNewExpenseSubmit} /> }
           { appViewType === AppViewType.calendarView && <CalendarView /> }
           { appViewType === AppViewType.menuView && <MenuView /> }
           { appViewType === AppViewType.reportView && <ReportView /> }

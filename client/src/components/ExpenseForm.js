@@ -38,7 +38,7 @@ const ExpenseForm = ({
   const [enteredDescription, setEnteredDescription] = useState(expenseItem.description)
   const [enteredAmount, setEnteredAmount] = useState(expenseItem.amount)
   const [enteredCategoryId, setEnteredCategoryId] = useState(expenseItem.categoryId)
-  const [expenseType, setExpenseType] = useState(defaultExpenseType)
+  const [expenseType, setExpenseType] = useState(expenseItem.type)
 
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
@@ -208,7 +208,14 @@ const ExpenseForm = ({
         <div className='expenseForm__inputs'>
           <div className='expenseForm__input'>
             <label htmlFor='expenseDate'>日付</label>
-            <DateSelector className="expenseForm__dateSelector" id="expenseDate" date={enteredDate} setDate={setEnteredDate} />
+            <DateSelector
+              className="expenseForm__dateSelector"
+              id="expenseDate"
+              date={enteredDate}
+              setDate={setEnteredDate}
+              minDate={updatingExpenseItem ? `${updatingExpenseItem.year}-${updatingExpenseItem.month.toString().padStart(2, '0')}-01` : '2000-01-01'}
+              maxDate={updatingExpenseItem ? `${updatingExpenseItem.year}-${updatingExpenseItem.month.toString().padStart(2, '0')}-${new Date(updatingExpenseItem.year, updatingExpenseItem.month, 0).getDate()}` : '2099-12-31'}
+            />
           </div>
           <div className='expenseForm__input'>
             <label htmlFor='expenseTitle'>説明</label>

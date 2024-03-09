@@ -10,10 +10,14 @@ import { ExpenseContext } from '../contexts/ExpenseContext'
 const CalendarView = () => {
   const today = new Date()
   const [yearMonth, setYearMonth] = useState(dayjs().format('YYYY-MM'))
-  const [expenses, setExpenses] = useState([])
   const [calendarClickedDay, setCalendarClickedDay] = useState(today.getDate()) // controls expense list scroll
 
-  const { expensesGroupedByYearMonth, setExpensesGroupedByYearMonth } = useContext(ExpenseContext)
+  const {
+    expensesGroupedByYearMonth,
+    setExpensesGroupedByYearMonth,
+    monthlyExpenses: expenses,
+    setMonthlyExpenses: setExpenses
+  } = useContext(ExpenseContext)
 
   const updateExpensesContext = (monthlyExpenses) => {
     setExpenses(() => monthlyExpenses)
@@ -70,6 +74,7 @@ const CalendarView = () => {
       return expense.id === updatedExpenseItem.id ? { ...updatedExpenseItem } : expense
     })
 
+    console.log('[update] updating expenses context')
     updateExpensesContext(newExpenses)
   }
 
@@ -78,6 +83,7 @@ const CalendarView = () => {
       return expense.id !== deletedExpenseItem.id
     })
 
+    console.log('[delete]updating expenses context')
     updateExpensesContext(newExpenses)
   }
 

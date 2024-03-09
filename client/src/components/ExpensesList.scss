@@ -56,6 +56,13 @@
     }
   }
 
+  &__expenseTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
   &__expenseAmount {
     display: flex;
     align-items: center;

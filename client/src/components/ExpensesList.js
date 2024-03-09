@@ -85,10 +85,9 @@ const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onI
                     const category = categoryMap[expense.categoryId]
                     return (
                       <div key={index} className='expensesList__expenseItem' onClick={() => onExpenseItemClick(expense)}>
-                        <div>
-                          { category && <Icon name={category.iconName} fill={category.iconColor} /> }
-                          {category?.text ?? ''}
-                          ({expense.title})
+                        <div className='expensesList__expenseTitle'>
+                          { category && <Icon name={category.iconName} fill={category.iconColor} width='2rem' height='2rem' /> }
+                          { category?.text ?? '' } ({expense.title})
                         </div>
                         <div className={`expensesList__expenseAmount ${expense.type === ExpenseType.income ? 'income' : ''}`}>
                           <span>{Number(expense.amount).toLocaleString()}円</span>
