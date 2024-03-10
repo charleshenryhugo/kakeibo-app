@@ -44,6 +44,7 @@ export const CategoryColors = [
 export const CategoryIconNames = [
   'icon-wallet',
   'icon-banknote',
+  'icon-camera',
   'icon-book',
   'icon-library',
   'icon-coin-yen',
@@ -54,5 +55,5 @@ export const CategoryIconNames = [
   'icon-shield',
   'icon-earth',
   'icon-flag',
-  'icon-npm'
+  'icon-pencil'
 ]

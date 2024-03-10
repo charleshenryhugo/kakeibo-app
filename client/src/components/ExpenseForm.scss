@@ -28,7 +28,8 @@
     padding: 1rem;
 
     &--submit,
-    &--delete {
+    &--delete,
+    &--upload {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -52,6 +53,12 @@
     }
 
     &--delete {
+      background-color: colors.$white;
+      color: colors.$sakura-bark;
+      border: 1px solid colors.$sakura-bark;
+    }
+
+    &--upload {
       background-color: colors.$white;
       color: colors.$sakura-bark;
       border: 1px solid colors.$sakura-bark;

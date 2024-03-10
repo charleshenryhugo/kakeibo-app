@@ -9,6 +9,7 @@ import Alert from './UI/Alert.js'
 import Expense from '../repositories/Expense.js'
 import CategoryPicker from './category/CategoryPicker.js'
 import dayjs from 'dayjs'
+import Icon from './UI/Icon.js'
 
 const ExpenseForm = ({
   updatingExpenseItem = null,
@@ -128,6 +129,11 @@ const ExpenseForm = ({
     setLoading(true)
 
     const file = event.target.files[0]
+
+    if (!file) {
+      setLoading(false)
+      return
+    }
     const src = URL.createObjectURL(file)
     const alt = file.name
     setReceiptImage((prevState) => {
@@ -268,13 +274,17 @@ const ExpenseForm = ({
           {
             !updatingExpenseItem && (
               <>
-                <label htmlFor="receiptUpload">レシートをスキャンする</label>
+                <label className='expenseForm__actions--upload' htmlFor="receiptUpload">
+                  <Icon name='icon-camera' width='2.5rem' height='2.5rem' fill='#654321'></Icon>
+                  レシートをスキャンする
+                </label>
                 <input
                   id="receiptUpload"
                   type="file"
                   name="receiptUpload"
                   accept="image/*"
                   onChange={onImageUpload}
+                  style={{ display: 'none' }}
                 />
                 <div>
                   <img id="receiptImage" src={receiptImage.src} alt={receiptImage.alt} height='200'></img>
