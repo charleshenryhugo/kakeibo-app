@@ -12,7 +12,6 @@ import CategoryList from './category/CategoryList'
 
 const AppMain = () => {
   const [expensesGroupedByYearMonth, setExpensesGroupedByYearMonth] = useState({})
-  const [monthlyExpenses, setMonthlyExpenses] = useState([])
 
   const [categories, setCategories] = useState([])
   const [categoryListOpen, setCategoryListOpen] = useState(false)
@@ -49,9 +48,7 @@ const AppMain = () => {
     <section className='appMain'>
       <ExpenseContext.Provider value={{
         expensesGroupedByYearMonth,
-        setExpensesGroupedByYearMonth,
-        monthlyExpenses,
-        setMonthlyExpenses
+        setExpensesGroupedByYearMonth
       }}>
         <CategoriesContext.Provider
           value={{

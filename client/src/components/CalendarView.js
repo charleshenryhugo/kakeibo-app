@@ -14,14 +14,10 @@ const CalendarView = () => {
 
   const {
     expensesGroupedByYearMonth,
-    setExpensesGroupedByYearMonth,
-    monthlyExpenses: expenses,
-    setMonthlyExpenses: setExpenses
+    setExpensesGroupedByYearMonth
   } = useContext(ExpenseContext)
 
   const updateExpensesContext = (monthlyExpenses) => {
-    setExpenses(() => monthlyExpenses)
-
     const groupedByDate = monthlyExpenses.reduce((acc, cur) => {
       const date = cur.inputDate
       if (acc[date]) {
@@ -70,7 +66,7 @@ const CalendarView = () => {
   }, [yearMonth])
 
   const onUpdateFormSubmit = (updatedExpenseItem) => {
-    const newExpenses = expenses.map((expense) => {
+    const newExpenses = Object.values(expensesGroupedByYearMonth[yearMonth]).flat().map((expense) => {
       return expense.id === updatedExpenseItem.id ? { ...updatedExpenseItem } : expense
     })
 
@@ -79,7 +75,7 @@ const CalendarView = () => {
   }
 
   const onExpenseItemDeleted = (deletedExpenseItem) => {
-    const newExpenses = expenses.filter((expense) => {
+    const newExpenses = Object.values(expensesGroupedByYearMonth[yearMonth]).flat().filter((expense) => {
       return expense.id !== deletedExpenseItem.id
     })
 
@@ -99,7 +95,6 @@ const CalendarView = () => {
         />
       </StickyTop>
       <ExpensesList
-        expenses={expenses}
         expensesGroupedByDate={expensesGroupedByYearMonth[yearMonth] ?? {}}
         onUpdateFormSubmit={onUpdateFormSubmit}
         onItemDelete={onExpenseItemDeleted}

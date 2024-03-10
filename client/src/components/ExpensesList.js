@@ -9,12 +9,14 @@ import { CategoriesContext } from '../contexts/CategoryContext'
 import Icon from './UI/Icon'
 import UpdateExpenseForm from './UpdateExpenseForm'
 
-const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onItemDelete, calendarClickedDay = null }) => {
+const ExpensesList = ({ expensesGroupedByDate, onUpdateFormSubmit, onItemDelete, calendarClickedDay = null }) => {
   const { categories } = useContext(CategoriesContext)
   const categoryMap = categories.reduce((acc, cur) => {
     acc[cur.id] = cur
     return acc
   }, {})
+
+  const expenses = Object.values(expensesGroupedByDate).flat()
 
   const expenseTotal = expenses.reduce((acc, cur) => {
     return cur.type === ExpenseType.expense ? acc + cur.amount : acc
@@ -115,7 +117,6 @@ const ExpensesList = ({ expenses, expensesGroupedByDate, onUpdateFormSubmit, onI
 }
 
 ExpensesList.propTypes = {
-  expenses: PropTypes.array.isRequired,
   expensesGroupedByDate: PropTypes.object.isRequired,
   onUpdateFormSubmit: PropTypes.func.isRequired,
   onItemDelete: PropTypes.func.isRequired,
