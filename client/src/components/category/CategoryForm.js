@@ -9,6 +9,7 @@ import CategoryColorPicker from './CategoryColorPicker'
 import { CategoryColors, CategoryIconNames } from '../../constants/Category'
 import CategoryIconPicker from './CategoryIconPicker'
 import { IoIosArrowBack } from 'react-icons/io'
+import ConfirmDialog from '../UI/ConfirmDialog'
 
 const CategoryForm = ({ onClose, updatingCategoryItem = null, expenseType }) => {
   const { setCategories } = useContext(CategoriesContext)
@@ -23,6 +24,7 @@ const CategoryForm = ({ onClose, updatingCategoryItem = null, expenseType }) => 
   const [enteredText, setEnteredText] = useState(categoryItem?.text ?? '')
   const [enteredIconName, setEnteredIconName] = useState(categoryItem.iconName)
   const [enteredIconColor, setEnteredIconColor] = useState(categoryItem.iconColor)
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false)
 
   const onSubmit = async () => {
     setLoading(true)
@@ -128,7 +130,17 @@ const CategoryForm = ({ onClose, updatingCategoryItem = null, expenseType }) => 
         </div>
         <div className='categoryForm__actions'>
           <span className='categoryForm__actions--submit' onClick={onSubmit}>保存する</span>
-          {updatingCategoryItem ? (<span className='categoryForm__actions--delete' onClick={onDelete}>削除する</span>) : ''}
+          {updatingCategoryItem && (
+            <>
+              <span className='categoryForm__actions--delete' onClick={() => setShowConfirmDialog(true)}>削除する</span>
+              <ConfirmDialog
+                show={showConfirmDialog}
+                message='削除してよろしいでしょうか？'
+                onConfirm={() => { setShowConfirmDialog(false); onDelete() }}
+                onCancel={() => setShowConfirmDialog(false)}
+              ></ConfirmDialog>
+            </>
+          )}
         </div>
       </section>
     </section>

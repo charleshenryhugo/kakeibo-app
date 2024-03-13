@@ -1,10 +1,20 @@
 import React from 'react'
-const Dialog = () => {
+import PropTypes from 'prop-types'
+import './Dialog.scss'
+
+const Dialog = ({ children, show }) => {
   return (
-        <div>
-            <h1>Dialog</h1>
-        </div>
+    <section className={`dialogWrapper ${show ? '' : 'hidden'}`}>
+      <div className='dialogContent'>
+        {children}
+      </div>
+    </section>
   )
+}
+
+Dialog.propTypes = {
+  children: PropTypes.node.isRequired,
+  show: PropTypes.bool.isRequired
 }
 
 export default Dialog

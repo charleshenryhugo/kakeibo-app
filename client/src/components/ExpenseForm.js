@@ -6,6 +6,7 @@ import { ExpenseType } from '../constants/ExpenseType.js'
 import LoadingIndicator from './UI/LoadingIndicator.js'
 import DateSelector from './calendar/DateSelector.js'
 import Alert from './UI/Alert.js'
+import ConfirmDialog from './UI/ConfirmDialog.js'
 import Expense from '../repositories/Expense.js'
 import CategoryPicker from './category/CategoryPicker.js'
 import dayjs from 'dayjs'
@@ -44,6 +45,7 @@ const ExpenseForm = ({
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false)
 
   const onFormSubmit = async (event) => {
     event.preventDefault()
@@ -93,11 +95,11 @@ const ExpenseForm = ({
   }
 
   const deleteExpenseItem = async () => {
-    setLoading(true)
-
     if (!updatingExpenseItem) {
       return
     }
+
+    setLoading(true)
 
     try {
       const data = await new Expense({ ...updatingExpenseItem }).delete()
@@ -266,9 +268,17 @@ const ExpenseForm = ({
           </button>
 
           {updatingExpenseItem &&
-            <span className='expenseForm__actions--delete' onClick={deleteExpenseItem}>
-              削除
-            </span>
+            <>
+              <span className='expenseForm__actions--delete' onClick={() => setShowConfirmDialog(true)}>
+                削除
+              </span>
+              <ConfirmDialog
+                show={showConfirmDialog}
+                message='削除してよろしいでしょうか？'
+                onConfirm={() => { setShowConfirmDialog(false); deleteExpenseItem() }}
+                onCancel={() => setShowConfirmDialog(false)}
+              />
+            </>
           }
 
           {
