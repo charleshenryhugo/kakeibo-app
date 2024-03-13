@@ -8,7 +8,7 @@ import Category from '../../repositories/Category'
 import CategoryColorPicker from './CategoryColorPicker'
 import { CategoryColors, CategoryIconNames } from '../../constants/Category'
 import CategoryIconPicker from './CategoryIconPicker'
-import LeftArrow from '../Icon/LeftArrow'
+import { IoIosArrowBack } from 'react-icons/io'
 
 const CategoryForm = ({ onClose, updatingCategoryItem = null, expenseType }) => {
   const { setCategories } = useContext(CategoriesContext)
@@ -100,7 +100,7 @@ const CategoryForm = ({ onClose, updatingCategoryItem = null, expenseType }) => 
       <LoadingIndicator show={loading} />
       <div className="categoryForm__header">
         <span className="categoryForm__closeButton" onClick={onClose}>
-          <LeftArrow width='15px' height='15px' /> 閉じる
+          <IoIosArrowBack size='1.5rem' /> 閉じる
         </span>
         <span className="categoryForm__title">{updatingCategoryItem ? 'カテゴリーを編集' : 'カテゴリーを作成'}</span>
         <span></span>

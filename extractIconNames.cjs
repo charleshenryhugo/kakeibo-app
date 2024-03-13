@@ -14,6 +14,7 @@ const symbols = document.querySelectorAll('symbol');
 const ids = Array.from(symbols).map(symbol => symbol.id);
 
 console.log(ids);
+console.log(`${ids.length} svg ids found`);
 
 // [
 //   'icon-wallet',

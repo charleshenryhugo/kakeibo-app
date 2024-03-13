@@ -4,9 +4,9 @@ import './ExpensesList.scss'
 import { ExpenseType } from '../constants/ExpenseType'
 import dayjs from 'dayjs'
 import { dayToText } from '../constants/Date'
-import RightArrow from './Icon/RightArrow'
 import { CategoriesContext } from '../contexts/CategoryContext'
 import Icon from './UI/Icon'
+import { IoIosArrowForward } from 'react-icons/io'
 import UpdateExpenseForm from './UpdateExpenseForm'
 
 const ExpensesList = ({ expensesGroupedByDate, onUpdateFormSubmit, onItemDelete, calendarClickedDay = null }) => {
@@ -93,7 +93,7 @@ const ExpensesList = ({ expensesGroupedByDate, onUpdateFormSubmit, onItemDelete,
                         </div>
                         <div className={`expensesList__expenseAmount ${expense.type === ExpenseType.income ? 'income' : ''}`}>
                           <span>{Number(expense.amount).toLocaleString()}円</span>
-                          <RightArrow width='12px' height='12px' />
+                          <IoIosArrowForward size='1.2rem' />
                         </div>
                       </div>
                     )

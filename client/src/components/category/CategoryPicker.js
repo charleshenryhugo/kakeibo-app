@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import './CategoryPicker.scss'
 import { CategoriesContext } from '../../contexts/CategoryContext'
-import RightArrow from '../Icon/RightArrow'
 import { ExpenseType } from '../../constants/ExpenseType'
 import Icon from '../UI/Icon'
+import { IoIosArrowForward } from 'react-icons/io'
 
 const CategoryPicker = ({ categoryId, setCategoryId, expenseType = ExpenseType.expense }) => {
   const { categories, setCategoryListOpen } = useContext(CategoriesContext)
@@ -22,7 +22,7 @@ const CategoryPicker = ({ categoryId, setCategoryId, expenseType = ExpenseType.e
         </div>
       ))}
       <div className='categoryPicker__item' onClick={() => setCategoryListOpen(true)}>
-        <span>編集・追加 <RightArrow width="10px" height="10px"></RightArrow></span>
+        <span>編集・追加 <IoIosArrowForward /></span>
       </div>
     </section>
   )

@@ -11,3 +11,10 @@ export const AppViewTypeToText = {
   [AppViewType.reportView]: 'レポート',
   [AppViewType.menuView]: 'メニュー'
 }
+
+export const AppViewTypeIconName = {
+  [AppViewType.expenseForm]: 'LuPencil',
+  [AppViewType.calendarView]: 'LuCalendarDays',
+  [AppViewType.reportView]: 'LuPieChart',
+  [AppViewType.menuView]: 'LuMenu'
+}

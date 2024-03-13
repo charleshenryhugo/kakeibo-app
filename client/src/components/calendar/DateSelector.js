@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './DateSelector.scss'
-import LeftArrow from '../Icon/LeftArrow'
-import RightArrow from '../Icon/RightArrow'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 const DateSelector = ({ date, setDate, minDate = '2000-01-01', maxDate = '2099-12-31', ...props }) => {
   const adjustDate = (yearMonthDay, offset) => {
@@ -17,7 +16,7 @@ const DateSelector = ({ date, setDate, minDate = '2000-01-01', maxDate = '2099-1
   return (
     <section className={`dateSelector ${props.className}`}>
       <span className="dateSelector__prev" onClick={() => setDate((prev) => adjustDate(prev, -1))}>
-        <LeftArrow width='30px' height='30px' />
+        <IoIosArrowBack size='3rem' />
       </span>
       <input
         id={props.id}
@@ -29,7 +28,7 @@ const DateSelector = ({ date, setDate, minDate = '2000-01-01', maxDate = '2099-1
         onChange={(event) => setDate(event.target.value)}
       />
       <span className="dateSelector__next" onClick={() => setDate((prev) => adjustDate(prev, 1))}>
-        <RightArrow width='30px' height='30px' />
+        <IoIosArrowForward size='3rem'/>
       </span>
     </section>
   )

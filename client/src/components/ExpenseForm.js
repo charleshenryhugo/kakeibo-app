@@ -9,7 +9,7 @@ import Alert from './UI/Alert.js'
 import Expense from '../repositories/Expense.js'
 import CategoryPicker from './category/CategoryPicker.js'
 import dayjs from 'dayjs'
-import Icon from './UI/Icon.js'
+import { MdOutlineDocumentScanner } from 'react-icons/md'
 
 const ExpenseForm = ({
   updatingExpenseItem = null,
@@ -275,7 +275,7 @@ const ExpenseForm = ({
             !updatingExpenseItem && (
               <>
                 <label className='expenseForm__actions--upload' htmlFor="receiptUpload">
-                  <Icon name='icon-camera' width='2.5rem' height='2.5rem' fill='#654321'></Icon>
+                  <MdOutlineDocumentScanner size='2.5rem' />
                   レシートをスキャンする
                 </label>
                 <input

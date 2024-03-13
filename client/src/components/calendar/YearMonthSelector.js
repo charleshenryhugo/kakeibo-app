@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './YearMonthSelector.scss'
-import LeftArrow from '../Icon/LeftArrow'
-import RightArrow from '../Icon/RightArrow'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 const YearMonthSelector = ({ yearMonth, setYearMonth }) => {
   const adjustYearMonth = (yearMonth, offset) => {
@@ -17,7 +16,7 @@ const YearMonthSelector = ({ yearMonth, setYearMonth }) => {
   return (
     <section className="yearMonthSelector">
       <span className="yearMonthSelector__prev" onClick={() => setYearMonth((prev) => adjustYearMonth(prev, -1))}>
-        <LeftArrow width='30px' height='30px' />
+        <IoIosArrowBack size='3rem' />
       </span>
       <input
         type='month'
@@ -28,7 +27,7 @@ const YearMonthSelector = ({ yearMonth, setYearMonth }) => {
         onChange={(event) => setYearMonth(event.target.value)}
       />
       <span className="yearMonthSelector__next" onClick={() => setYearMonth((prev) => adjustYearMonth(prev, 1))}>
-        <RightArrow width='30px' height='30px' />
+        <IoIosArrowForward size={'3rem'}/>
       </span>
     </section>
   )

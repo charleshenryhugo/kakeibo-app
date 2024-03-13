@@ -45,7 +45,7 @@ const AppMain = () => {
 
   /* Note: Every time categories context is updated, all components that consume the context will re-render. */
   return (
-    <section className='appMain'>
+    <main className='appMain'>
       <ExpenseContext.Provider value={{
         expensesGroupedByYearMonth,
         setExpensesGroupedByYearMonth
@@ -73,7 +73,7 @@ const AppMain = () => {
         </CategoriesContext.Provider>
       </ExpenseContext.Provider>
 
-    </section>
+    </main>
   )
 }
 
